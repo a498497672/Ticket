@@ -1,0 +1,127 @@
+﻿@model Ticket.Model.WeiXin.WeiXinBannerDto
+@{
+    ViewBag.Title = "修改轮播图";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+<div class="layui-main-common">
+    <div style="width: 350px; margin-top:15px;">
+        <form class="layui-form" action="">
+            <input type="hidden" name="Id" value="@Model.Id" />
+            <div class="layui-form-item">
+                <label class="layui-form-label layui-form-label-width">标题</label>
+                <div class="layui-input-block layui-input-block-width">
+                    <input type="text" name="Title" required lay-verify="required" autocomplete="off" placeholder="" class="layui-input" value="@Model.Title">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label layui-form-label-width">链接</label>
+                <div class="layui-input-block layui-input-block-width">
+                    <input type="text" name="Url" required lay-verify="required" autocomplete="off" placeholder="" class="layui-input" value="@Model.Url">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <input type="hidden" id="shopImageId" name="ImgPath" class="layui-input" lay-verify="requiredImage" value="@Model.ImgPath">
+                <label class="layui-form-label layui-form-label-width">图片</label>
+                <div class="layui-input-block layui-input-block-width">
+                    <div class="layui-input-inline" style="width:115px;">
+                        <a class="layui-btn" id="uploadImg">
+                            <i class="layui-icon"></i>上传图片
+                            <input class="layui-upload-file" type="file" name="file" id="file">
+                        </a>
+                    </div>
+                    <img src="@Model.ImgPathUrl" id="imgSrc" width="200" height="120" style=" margin-top:5px;" />
+                    <i class="layui-icon" id="iconShow" style="color:green;display:none">&#xe616;</i>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label layui-form-label-width">是否启用</label>
+                <div class="layui-input-block layui-input-block-width">
+                    @if (Model.IsEnable)
+                    {
+                        <input type="checkbox" name="IsEnable" lay-skin="switch" lay-text="开启|关闭" value="true" checked>
+                    }
+                    else
+                    {
+                        <input type="checkbox" name="IsEnable" lay-skin="switch" lay-text="开启|关闭" value="true">
+                    }
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-input-block layui-input-block-width">
+                    <button class="layui-btn" lay-submit="action" lay-filter="action">确定</button>
+                    <a class="layui-btn layui-btn-primary" id="closeLayer">取消</a>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</div>
+<script>
+        layui.use(['element', 'form', 'laydate', 'upload'], function () {
+            var form = layui.form, element = layui.element, laydate = layui.laydate, $ = layui.$, upload = layui.upload;
+            var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+
+            form.verify({
+                requiredImage: function (value, item) { //value：表单的值、item：表单的DOM对象
+                    if (value == "" || value == undefined || value == null) {
+                        return '请上传店铺图片';
+                    }
+                }
+            });
+
+            upload.render({
+                elem: '#uploadImg',
+                url: "@ViewBag.ImageDomain" + '/api/FileUpload/PostImageFile',
+                exts: "jpg|png|gif|bmp|jpeg",
+                size: 2048000,//最大2M
+                before: function (obj) {
+                    layer.load(); //上传loading
+                }, done: function (res, index, upload) {
+                    layer.closeAll('loading'); //关闭loading
+                    if (res.Success) {
+                        $("#shopImageId").val(res.Data.Path);
+                        $("#imgSrc").attr("src", res.Data.Url);
+                        $("#imgSrc").show();
+                        $("#iconShow").show();
+                        layer.msg('上传成功', { icon: 1 });
+                    } else {
+                        layer.msg('上传失败', { icon: 2 });
+                    }
+
+                }, error: function (index, upload) {
+                    layer.closeAll('loading'); //关闭loading
+                }
+            });
+
+            //监听提交
+            form.on('submit(action)', function (data) {
+                $.ajax({
+                    url: '/PageSetting/UpdateBannerData',
+                    data: data.field,
+                    type: 'post',
+                    dataType: "json",
+                    success: function (data, status) {
+                        if (data.Success) {
+                            layer.msg('修改成功', { icon: 1 });
+                            parent.layer.close(index);
+                        } else {
+                            layer.msg(data.Message, { icon: 2 });
+                        }
+                    },
+                    beforeSend: function () {
+                        layer.load("loading");
+                    },
+                    complete: function () {
+                        layer.closeAll('loading');
+                    }
+                });
+                return false;
+            });
+
+            $("#closeLayer").click(function () {
+                parent.layer.close(index);
+            });
+        });
+</script>
+

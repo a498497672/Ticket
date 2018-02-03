@@ -1,0 +1,81 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>登录</title>
+    <link href="~/Content/login.css" rel="stylesheet" />
+    <link href="~/JavaScript/layui/css/layui.css" rel="stylesheet" />
+    <script src="~/JavaScript/layui/layui.js"></script>
+</head>
+
+<body class="login" mycollectionplug="bind" onload="loadTopWindow()">
+    <div class="login_m">
+        <div class="login_logo"><span style="height:36px; color:#ff6a00;font-size:28px;">用户登录</span></div>
+        <div class="login_boder">
+            <form class="layui-form" action="">
+                <div class="login_padding" id="login_model">
+                    <h2>用户名</h2>
+                    <label>
+                        <input name="UserName" class="txt_input txt_input2" type="text" required lay-verify="required" placeholder="请输入用户名">
+                    </label>
+                    <h2>密码</h2>
+                    <label>
+                        <input name="PassWord" class="txt_input" type="password" required lay-verify="required" placeholder="请输入密码">
+                    </label>
+                    @*<p class="forgot">
+                            <input name="checkbox" id="save_me" type="checkbox">
+                            <label for="checkbox">Remember me</label>
+                        </p>*@
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <button class="layui-btn" lay-submit lay-filter="formDemo">&nbsp;&nbsp;登录&nbsp;&nbsp;</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script type="text/javascript">
+        layui.use(['element', 'form'], function () {
+            var form = layui.form, element = layui.element, $ = layui.$;
+
+            //监听提交
+            form.on('submit(formDemo)', function (data) {
+                $.ajax({
+                    url: '/Login/PostLogin',
+                    data: data.field,
+                    type: 'post',
+                    dataType: "json",
+                    success: function (data, status) {
+                        if (data.success) {
+                            layer.msg("登录成功", { icon: 1 });
+                            location.href = "/Home/Index";
+                        } else {
+                            layer.msg(data.message, { icon: 2 });
+                        }
+                    },
+                    beforeSend: function () {
+                        layer.load("loading");
+                    },
+                    complete: function () {
+                        layer.closeAll('loading');
+                    }
+                });
+                return false;
+            });
+        });
+        function loadTopWindow() {
+            if (window.top != null && window.top.document.URL != document.URL) {
+                var urlStr = document.URL;
+                window.top.location = urlStr;
+            }
+        }
+    </script>
+</body>
+</html>

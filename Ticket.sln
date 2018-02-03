@@ -1,0 +1,61 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2010
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ticket.Application", "Ticket.Application\Ticket.Application.csproj", "{B52F4247-5819-4820-BDD6-13A5EDAD981C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ticket.Core", "Ticket.Core\Ticket.Core.csproj", "{8C73DEE9-9A87-4FF7-860B-9CBCF32E673E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ticket.EntityFramework", "Ticket.EntityFramework\Ticket.EntityFramework.csproj", "{11130CE4-0E26-4DB5-A8ED-6CB3AFDFED07}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ticket.Model", "Ticket.Model\Ticket.Model.csproj", "{65B80EDC-1D61-419D-9E36-BD941B70EF19}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ticket.Utility", "Ticket.Utility\Ticket.Utility.csproj", "{8B1F8733-0405-46AB-BD45-64B07E6060E9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ticket.Platform", "Ticket.Platform\Ticket.Platform.csproj", "{B5E79100-2778-451B-9E47-0BC444B07E64}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ticket.WebApi", "Ticket.WebApi\Ticket.WebApi.csproj", "{E712729A-1248-4662-8584-D29190C2B612}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B52F4247-5819-4820-BDD6-13A5EDAD981C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B52F4247-5819-4820-BDD6-13A5EDAD981C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B52F4247-5819-4820-BDD6-13A5EDAD981C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B52F4247-5819-4820-BDD6-13A5EDAD981C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C73DEE9-9A87-4FF7-860B-9CBCF32E673E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C73DEE9-9A87-4FF7-860B-9CBCF32E673E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C73DEE9-9A87-4FF7-860B-9CBCF32E673E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C73DEE9-9A87-4FF7-860B-9CBCF32E673E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11130CE4-0E26-4DB5-A8ED-6CB3AFDFED07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11130CE4-0E26-4DB5-A8ED-6CB3AFDFED07}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11130CE4-0E26-4DB5-A8ED-6CB3AFDFED07}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11130CE4-0E26-4DB5-A8ED-6CB3AFDFED07}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65B80EDC-1D61-419D-9E36-BD941B70EF19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65B80EDC-1D61-419D-9E36-BD941B70EF19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65B80EDC-1D61-419D-9E36-BD941B70EF19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65B80EDC-1D61-419D-9E36-BD941B70EF19}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B1F8733-0405-46AB-BD45-64B07E6060E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B1F8733-0405-46AB-BD45-64B07E6060E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B1F8733-0405-46AB-BD45-64B07E6060E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B1F8733-0405-46AB-BD45-64B07E6060E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5E79100-2778-451B-9E47-0BC444B07E64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5E79100-2778-451B-9E47-0BC444B07E64}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5E79100-2778-451B-9E47-0BC444B07E64}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5E79100-2778-451B-9E47-0BC444B07E64}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E712729A-1248-4662-8584-D29190C2B612}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E712729A-1248-4662-8584-D29190C2B612}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E712729A-1248-4662-8584-D29190C2B612}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E712729A-1248-4662-8584-D29190C2B612}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {86C81FF6-B06C-4AA9-93E1-DE7B24131958}
+	EndGlobalSection
+EndGlobal

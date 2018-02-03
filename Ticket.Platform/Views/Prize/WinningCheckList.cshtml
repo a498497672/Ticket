@@ -1,0 +1,137 @@
+﻿
+@{
+    ViewBag.Title = "中奖查询";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+<div class="buyTicketTitle">
+    <div class="buyTicketTitleAll">
+        <a href=""></a><span>中奖查询</span>
+    </div>
+</div>
+<div class="layui-main-common">
+    <div class="queryTable">
+        <form class="layui-form" action="" id="queryForm">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">中奖编号</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="Number" autocomplete="off" class="layui-input" placeholder="中奖编号">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">中奖时间</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="WinningTime" id="start" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">中奖类型</label>
+                    <div class="layui-input-inline">
+                        <select name="WinningType">
+                            <option value="" selected>全部</option>
+                            @foreach (var row in ViewBag.SelectItems)
+                            {
+                                <option value="@row.Name">@row.Name</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">用户ID</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="UserId" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">用户昵称</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="UserNickName" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">&nbsp;</label>
+                <div class="layui-inline">
+                    <a class="layui-btn"><i class="layui-icon">&#xe615;</i>查询</a>
+                </div>
+            </div>
+        </form>
+    </div>
+    <table class="layui-hide" id="LAY_table_list" lay-filter="tableList"></table>
+</div>
+<script>
+        layui.use(['element', 'form', 'table', 'laydate'], function () {
+            var form = layui.form, table = layui.table, element = layui.element, laydate = layui.laydate;
+            //方法级渲染
+            table.render({
+                elem: '#LAY_table_list'
+                , url: '/Prize/WinningCheckListData'
+                , cols: [[
+                    { field: 'Number', title: '中奖编号', width: 180 }
+                    , { field: 'UserId', title: '中奖用户ID', width: 100 }
+                    , { field: 'UserNickName', title: '用户昵称', width: 100 }
+                    , { field: 'Name', title: '中奖类型', width: 100 }
+                    , { field: 'PrizeName', title: '奖品信息', width: 110 }
+                    , { field: 'WinningDateName', title: '中奖时间', width: 170 }
+                    , { field: 'MinUseAmount', title: '最小使用金额', width: 120 }
+                    , { field: 'UseDate', title: '有效期', width: 200 }
+                    , { field: 'IsUseName', title: '是否使用', width: 110 }
+                ]]
+                , id: 'tableReload'
+                , page: true
+                , response: {
+                    statusName: 'Success' //数据状态的字段名称，默认：code
+                    , statusCode: true //成功的状态码，默认：0
+                    , msgName: 'Message' //状态信息的字段名称，默认：msg
+                    , countName: 'Count' //数据总数的字段名称，默认：count
+                    , dataName: 'Data' //数据列表的字段名称，默认：data
+                }
+                , where: { DataStatus: 2 }
+            });
+
+            //监听工具条 (注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值")
+            table.on('tool(tableList)', function (obj) {
+                var data = obj.data; //获得当前行数据
+                var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+                var tr = obj.tr; //获得当前行 tr 的DOM对象
+                if (layEvent === 'edit') { //编辑
+                    layer.open({
+                        type: 2,
+                        title: "修改奖品",
+                        area: ['430px', '500px'],
+                        fixed: false,
+                        content: '/Prize/Update?id=' + data.Id,
+                        end: function () {
+                            active.reload();
+                        }
+                    });
+                }
+            });
+
+            var $ = layui.$, active = {
+                reload: function () {
+                    var serializeObj = {};
+                    $($("#queryForm").serializeArray()).each(function () {
+                        serializeObj[this.name] = this.value;
+                    });
+                    //执行重载
+                    table.reload('tableReload', {
+                        page: {
+                            curr: 1 //重新从第 1 页开始
+                        }
+                      , where: serializeObj
+                    });
+                }
+            };
+
+            $('.layui-btn').on('click', function () {
+                active.reload();
+            });
+
+            //日期有效范围
+            var start = laydate.render({ elem: '#start' });
+        });
+</script>
+

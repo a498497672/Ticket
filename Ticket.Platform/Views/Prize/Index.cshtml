@@ -1,0 +1,192 @@
+﻿@model Ticket.Model.Prize.WeiXinPrizeConfigDTO
+@{
+    ViewBag.Title = "抽奖设置";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<div class="buyTicketTitle">
+    <div class="buyTicketTitleAll">
+        <a href=""></a><span>抽奖设置</span>
+    </div>
+</div>
+<div class="layui-main-common">
+    <div class="queryTable">
+        <form class="layui-form" action="" id="queryForm">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">抽奖开关</label>
+                    <div class="layui-input-inline">
+                        @if (Model.IsEnable)
+                        {
+                            <input type="checkbox" name="IsEnable" lay-skin="switch" lay-text="开启|关闭" value="true" checked>
+                        }
+                        else
+                        {
+                            <input type="checkbox" name="IsEnable" lay-skin="switch" lay-text="开启|关闭" value="true">
+                        }
+
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">每日抽奖次数</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="Frequency" lay-verify="required|number" autocomplete="off" class="layui-input" placeholder="每人每日抽奖次数" value="@Model.Frequency">
+                    </div>
+                    <div class="layui-form-mid layui-word-aux">次</div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">开始日期</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="StartDate" id="start" lay-verify="required|date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input" value="@Model.StartDateStr">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">结束日期</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="EndDate" id="end" lay-verify="required|date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input" value="@Model.EndDateStr">
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">&nbsp;</label>
+                <div class="layui-inline">
+                    <button class="layui-btn" lay-submit lay-filter="formDemo"><i class="layui-icon">&#xe639;</i>保存配置</button>
+                    <a class="layui-btn layui-btn-normal" id="addPrize"><i class="layui-icon">&#xe608;</i>新增奖品</a>
+                </div>
+            </div>
+        </form>
+
+    </div>
+    <div class="layui-tab layui-tab-brief" lay-filter="docTabBrief">
+        <ul class="layui-tab-title">
+            <li class="layui-this">奖品设置</li>
+        </ul>
+    </div>
+    <table class="layui-hide" id="LAY_table_list" lay-filter="tableList"></table>
+</div>
+<script type="text/html" id="barAction">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+</script>
+<script>
+        layui.use(['element', 'form', 'table', 'laydate'], function () {
+            var form = layui.form, table = layui.table, element = layui.element, laydate = layui.laydate;
+            //方法级渲染
+            table.render({
+                elem: '#LAY_table_list'
+                , url: '/Prize/PrizeListData/'
+                , cols: [[
+                    { field: 'Name', title: '显示名称', width: 130 }
+                    , { field: 'PrizeName', title: '奖品名称', width: 130 }
+                    , { field: 'PrizeProbability', title: '中奖概率', width: 90 }
+                    , { field: 'Stock', title: '库存', width: 80 }
+                    , { field: 'Money', title: '金额', width: 80 }
+                    , { field: 'PrizeTypeName', title: '类型', width: 100 }
+                    , { field: 'MinUseAmount', title: '最小使用金额', width: 120 }
+                    , { field: 'UseDate', title: '有效期', width: 210 }
+                    , { field: 'IsEnableName', title: '是否启用', width: 90 }
+                    , { fixed: 'right', title: '操作管理', width: 100, align: 'center', toolbar: '#barAction' }
+                ]]
+                , id: 'tableReload'
+                , page: false
+                , response: {
+                    statusName: 'Success' //数据状态的字段名称，默认：code
+                    , statusCode: true //成功的状态码，默认：0
+                    , msgName: 'Message' //状态信息的字段名称，默认：msg
+                    , countName: 'Count' //数据总数的字段名称，默认：count
+                    , dataName: 'Data' //数据列表的字段名称，默认：data
+                }
+                , where: { DataStatus: 2 }
+            });
+
+            //监听工具条 (注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值")
+            table.on('tool(tableList)', function (obj) {
+                var data = obj.data; //获得当前行数据
+                var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+                var tr = obj.tr; //获得当前行 tr 的DOM对象
+                if (layEvent === 'edit') { //编辑
+                    layer.open({
+                        type: 2,
+                        title: "修改奖品",
+                        area: ['430px', '500px'],
+                        fixed: false,
+                        content: '/Prize/Update?id=' + data.Id,
+                        end: function () {
+                            active.reload();
+                        }
+                    });
+                }
+            });
+
+            var $ = layui.$, active = {
+                reload: function () {
+                    //执行重载
+                    table.reload('tableReload', {});
+                }
+            };
+
+            //监听提交
+            form.on('submit(formDemo)', function (data) {
+                layer.confirm('确认要保存配置吗?', function (index) {
+                    $.ajax({
+                        url: '/Prize/UpdatePrizeConfigData',
+                        data: data.field,
+                        type: 'post',
+                        dataType: "json",
+                        success: function (data, status) {
+                            layer.close(index);
+                            if (data.Success) {
+                                layer.msg(data.Message, { icon: 1 });
+                            } else {
+                                layer.msg(data.Message, { icon: 2 });
+                            }
+                        },
+                        beforeSend: function () {
+                            layer.load("loading");
+                        },
+                        complete: function () {
+                            layer.closeAll('loading');
+                        }
+                    });
+                });
+                return false;
+            });
+
+            $("#addPrize").on('click', function () {
+                layer.open({
+                    type: 2,
+                    title: "添加奖品",
+                    area: ['430px', '500px'],
+                    fixed: false,
+                    content: '/Prize/Add',
+                    end: function () {
+                        active.reload();
+                    }
+                });
+            });
+
+            //日期有效范围
+            var start = laydate.render({
+                elem: '#start', done: function (value, date) {
+                    var now = new Date(value);
+                    end.config.min.year = now.getFullYear();
+                    end.config.min.month = now.getMonth();
+                    end.config.min.date = now.getDate();
+                }
+            });
+
+            var end = laydate.render({
+                elem: '#end', done: function (value, date) {
+                    var now = new Date(value);
+                    start.config.max.year = now.getFullYear();
+                    start.config.max.month = now.getMonth();
+                    start.config.max.date = now.getDate();
+                }
+            });
+        });
+</script>
+

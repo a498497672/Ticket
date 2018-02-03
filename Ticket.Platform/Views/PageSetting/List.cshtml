@@ -1,0 +1,164 @@
+﻿
+@{
+    ViewBag.Title = "首页设置";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<div class="buyTicketTitle">
+    <div class="buyTicketTitleAll">
+        <a href=""></a><span>首页设置</span>
+    </div>
+</div>
+<div class="layui-main-common">
+    <div class="queryTable">
+        <form class="layui-form" action="" id="queryForm"></form>
+    </div>
+    <div class="layui-tab layui-tab-brief" lay-filter="docTabBrief">
+        <ul class="layui-tab-title">
+            <li class="layui-this">轮播图设置</li>
+        </ul>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <a class="layui-btn layui-btn-normal" id="btnAdd"><i class="layui-icon">&#xe608;</i>新增轮播图</a>
+        </div>
+    </div>
+    <table class="layui-hide" id="LAY_table_list" lay-filter="tableList"></table>
+</div>
+<script type="text/html" id="barAction">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="moveUp">上移</a>
+    <a class="layui-btn layui-btn-xs layui-btn-warm" lay-event="moveDown">下移</a>
+    {{#if(d.IsEnable==true){}}
+    <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="isEnable">下架</a>
+    {{#  } else { }}
+    <a class="layui-btn layui-btn-xs layui-btn-primary" lay-event="isEnable">上架</a>
+    {{#  } }}
+</script>
+<script>
+    layui.use(['element', 'form', 'table', 'laydate'], function () {
+        var form = layui.form, table = layui.table, element = layui.element, laydate = layui.laydate;
+        //方法级渲染
+        table.render({
+            elem: '#LAY_table_list'
+            , url: '/PageSetting/BannerListData'
+            , cols: [[
+                { field: 'Order', title: '显示排序', width: 130 }
+                , { field: 'Title', title: '标题', width: 130 }
+                , { field: 'Url', title: '链接', width: 240 }
+                , { field: 'IsEnableName', title: '状态', width: 130 }
+                , { fixed: 'right', title: '操作管理', width: 250, align: 'center', toolbar: '#barAction' }
+            ]]
+            , id: 'tableReload'
+            , page: false
+            , response: {
+                statusName: 'Success' //数据状态的字段名称，默认：code
+                , statusCode: true //成功的状态码，默认：0
+                , msgName: 'Message' //状态信息的字段名称，默认：msg
+                , countName: 'Count' //数据总数的字段名称，默认：count
+                , dataName: 'Data' //数据列表的字段名称，默认：data
+            }
+        });
+
+        //监听工具条 (注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值")
+        table.on('tool(tableList)', function (obj) {
+            var data = obj.data; //获得当前行数据
+            var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+            var tr = obj.tr; //获得当前行 tr 的DOM对象
+            if (layEvent === 'edit') { //编辑
+                layer.open({
+                    type: 2,
+                    title: "修改奖品",
+                    area: ['430px', '470px'],
+                    fixed: false,
+                    content: '/PageSetting/Update?id=' + data.Id,
+                    end: function () {
+                        active.reload();
+                    }
+                });
+            } else if (layEvent === 'isEnable') {
+                $.ajax({
+                    url: '/PageSetting/UpdateIsEnable?id=' + data.Id,
+                    type: 'post',
+                    dataType: "json",
+                    success: function (data, status) {
+                        if (data.Success) {
+                            active.reload();
+                            layer.msg(data.Message, { icon: 1 });
+                        } else {
+                            layer.msg(data.Message, { icon: 2 });
+                        }
+                    },
+                    beforeSend: function () {
+                        layer.load("loading");
+                    },
+                    complete: function () {
+                        layer.closeAll('loading');
+                    }
+                });
+            } else if (layEvent === 'moveUp') {
+                $.ajax({
+                    url: '/PageSetting/moveUp?id=' + data.Id,
+                    type: 'post',
+                    dataType: "json",
+                    success: function (data, status) {
+                        if (data.Success) {
+                            active.reload();
+                            layer.msg(data.Message, { icon: 1 });
+                        } else {
+                            layer.msg(data.Message, { icon: 2 });
+                        }
+                    },
+                    beforeSend: function () {
+                        layer.load("loading");
+                    },
+                    complete: function () {
+                        layer.closeAll('loading');
+                    }
+                });
+            } else if (layEvent === 'moveDown') {
+                $.ajax({
+                    url: '/PageSetting/moveDown?id=' + data.Id,
+                    type: 'post',
+                    dataType: "json",
+                    success: function (data, status) {
+                        if (data.Success) {
+                            active.reload();
+                            layer.msg(data.Message, { icon: 1 });
+                        } else {
+                            layer.msg(data.Message, { icon: 2 });
+                        }
+                    },
+                    beforeSend: function () {
+                        layer.load("loading");
+                    },
+                    complete: function () {
+                        layer.closeAll('loading');
+                    }
+                });
+            }
+        });
+
+        var $ = layui.$, active = {
+            reload: function () {
+                //执行重载
+                table.reload('tableReload', {});
+            }
+        };
+
+        $("#btnAdd").on('click', function () {
+            layer.open({
+                type: 2,
+                title: "添加轮播图",
+                area: ['430px', '470px'],
+                fixed: false,
+                content: '/PageSetting/Add',
+                end: function () {
+                    active.reload();
+                }
+            });
+        });
+
+    });
+</script>
+

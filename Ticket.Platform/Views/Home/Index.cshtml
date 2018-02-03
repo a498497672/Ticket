@@ -1,0 +1,163 @@
+﻿
+@{
+    ViewBag.Title = "管理系统";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<div class="layui-layout-body">
+    <div class="layui-layout layui-layout-admin">
+        <div class="layui-header">
+            <div class="layui-logo">管理系统</div>
+            <!-- 头部区域（可配合layui已有的水平导航） -->
+            @*<ul class="layui-nav layui-layout-left">
+                    <li class="layui-nav-item"><a href="">控制台</a></li>
+                    <li class="layui-nav-item"><a href="">商品管理</a></li>
+                    <li class="layui-nav-item"><a href="">用户</a></li>
+                    <li class="layui-nav-item">
+                        <a href="javascript:;">其它系统</a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="">邮件管理</a></dd>
+                            <dd><a href="">消息管理</a></dd>
+                            <dd><a href="">授权管理</a></dd>
+                        </dl>
+                    </li>
+                </ul>*@
+            <ul class="layui-nav layui-layout-right">
+                <li class="layui-nav-item">
+                    <a href="javascript:;">
+                        @*<img src="http://t.cn/RCzsdCq" class="layui-nav-img">*@
+                        系统管理员
+                    </a>
+                    <dl class="layui-nav-child">
+                        @*<dd><a href="javascript:;">基本资料</a></dd>
+                            <dd><a href="javascript:;">安全设置</a></dd>*@
+                    </dl>
+                </li>
+                <li class="layui-nav-item"><a href="javascript:;" id="loginOut">退出</a></li>
+            </ul>
+        </div>
+
+        <div class="layui-side layui-bg-black">
+            <div class="layui-side-scroll">
+                <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+                <ul class="layui-nav layui-nav-tree" lay-filter="test" id="sideNav">
+                    <li class="layui-nav-item layui-this"><dl><dd><a href="javascript:;" data-url="/Dashboard/Index">首页</a></dd></dl></li>
+                    @*<li class="layui-nav-item"><dl><dd><a href="javascript:;" data-url="/Order/List">订单管理</a></dd></dl></li>
+                    <li class="layui-nav-item layui-nav-itemed">
+                        <a class="" href="javascript:;">商家管理</a>
+                        <dl class="layui-nav-child">
+                            <dd id="businessListItem"><a href="javascript:;" data-url="/Business/List">商家用户管理</a></dd>
+                            <dd><a href="javascript:;" data-url="/WeChatAccount/MasterConfig">主微信支付配置</a></dd>
+                        </dl>
+                    </li>*@
+                    <li class="layui-nav-item layui-nav-itemed">
+                        <a href="javascript:;">用户管理</a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="javascript:;" data-url="/Prize/WinningCheckList">用户列表</a></dd>
+                            <dd><a href="javascript:;" data-url="/Prize/Index">积分设置</a></dd>
+                            <dd><a href="javascript:;" data-url="/Prize/WinningCheckList">会员类型</a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item layui-nav-itemed">
+                        <a href="javascript:;">抽奖管理</a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="javascript:;" data-url="/Prize/Index">抽奖设置</a></dd>
+                            <dd><a href="javascript:;" data-url="/Prize/WinningCheckList">中奖查询</a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item layui-nav-itemed">
+                        <a href="javascript:;">景区设置</a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="javascript:;" data-url="/PageSetting/List">首页设置</a></dd>
+                            <dd><a href="javascript:;" data-url="/PageSetting/List">景区指数</a></dd>
+                            <dd><a href="javascript:;" data-url="/PageSetting/List">留声墙管理</a></dd>
+                            <dd><a href="javascript:;" data-url="/PageSetting/List">系统消息</a></dd>
+                        </dl>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="layui-body" style="bottom:0px;">
+            @*<div class="layui-tab layui-tab-brief" lay-filter="page-tab">
+                    <ul class="layui-tab-title" id="tabTitle">
+                        <li class="layui-this" lay-id="0"><label>首页</label></li>
+                    </ul>
+                    <div class="layui-tab-content" id="tabContainers">
+                        <div class="layui-tab-item layui-show">
+                            <iframe data-frameid="0" scrolling="auto" frameborder="0" src="/MerchantAccount/List" style="width:100%;height:100%;"></iframe>
+                        </div>
+                    </div>
+                </div>*@
+            <iframe data-frameid="0" scrolling="auto" frameborder="0" src="/Prize/Index" style="width:100%;height:99.5%;"></iframe>
+        </div>
+        <!-- 底部固定区域 -->
+        @*<div class="layui-footer">
+                Copyright ©2009-2018 风景网 Fengjing.com 版权所有 ICP备案号：粤ICP备15041511号
+            </div>*@
+    </div>
+
+</div>
+<script>
+    //JavaScript代码区域
+    layui.use(['element', 'layer'], function () {
+        var $ = layui.jquery,
+            element = layui.element;
+        //iframe自适应
+        $(window).on('resize', function () {
+            var $obj = $('#tabContainers');
+            $obj.height($(this).height() - 145);
+            $obj.find('iframe').each(function () {
+                $(this).height($obj.height());
+            });
+        }).resize();
+        //给nav绑定事件
+        $('.layui-nav .layui-nav-item dd> a').each(function () {
+            var $obj = $(this);
+            var url = $obj.data('url'); //tab内容的地址
+            var title = $obj.children("label").html();
+            //获取设定的url
+            if (url !== undefined) {
+                $obj.on('click', function () {
+                    $('#tabTitle label').html(title);
+                    $("iframe[data-frameid='0']").attr("src", url)//切换后刷新框架
+                });
+            }
+        });
+
+        $("#loginOut").click(function () {
+            layer.open({
+                content: '确认要退出登录吗？',
+                btn: ['确定', '取消'],
+                area: '360px',
+                icon: 3,
+                yes: function (index, layero) {
+                    loginOut();
+                }
+            });
+
+        });
+
+        function loginOut() {
+            $.ajax({
+                url: '/Login/LoginOut',
+                type: 'post',
+                dataType: "json",
+                success: function (data, status) {
+                    if (data.success) {
+                        layer.msg("注销成功", { icon: 1 });
+                        location.href = "/Login/Index";
+                    } else {
+                        layer.msg(data.message, { icon: 2 });
+                    }
+                },
+                beforeSend: function () {
+                    layer.load("loading");
+                },
+                complete: function () {
+                    layer.closeAll('loading');
+                }
+            });
+        }
+    })
+</script>

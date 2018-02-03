@@ -1,0 +1,136 @@
+﻿
+@{
+    ViewBag.Title = "修改奖品";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<div class="layui-main-common">
+    <div style="width: 350px; margin-top:15px;">
+        <form class="layui-form" action="">
+            <div class="layui-form-item">
+                <label class="layui-form-label layui-form-label-width">显示名称</label>
+                <div class="layui-input-block layui-input-block-width">
+                    <input type="text" name="Name" required lay-verify="required" autocomplete="off" placeholder="" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label layui-form-label-width">奖品名称</label>
+                <div class="layui-input-block layui-input-block-width">
+                    <input type="text" name="PrizeName" required lay-verify="required" autocomplete="off" placeholder="" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label layui-form-label-width">中奖概率</label>
+                <div class="layui-input-block layui-input-block-width">
+                    <input type="text" name="PrizeProbability" required lay-verify="required|number" autocomplete="off" placeholder="" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label layui-form-label-width">奖品库存</label>
+                <div class="layui-input-block layui-input-block-width">
+                    <input type="text" name="Stock" required lay-verify="required|number" autocomplete="off" placeholder="" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label layui-form-label-width">奖品金额</label>
+                <div class="layui-input-block layui-input-block-width">
+                    <input type="text" name="Money" required lay-verify="required|Money" autocomplete="off" placeholder="" class="layui-input" value="0">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label layui-form-label-width">奖品类型</label>
+                <div class="layui-input-block layui-input-block-width">
+                    <select name="PrizeType" lay-verify="required">
+                        <option value="0">谢谢参与</option>
+                        <option value="1">优惠卷</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label layui-form-label-width">最少使用金额</label>
+                <div class="layui-input-block layui-input-block-width">
+                    <input type="text" name="MinUseAmount" required lay-verify="required|Money" autocomplete="off" placeholder="" class="layui-input" value="0">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label layui-form-label-width">开始日期</label>
+                <div class="layui-input-block layui-input-block-width">
+                    <input id="start" type="text" name="StartDate" lay-verify="required|date" namemsg="开始日期" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label layui-form-label-width">结束日期</label>
+                <div class="layui-input-block layui-input-block-width">
+                    <input id="end" type="text" name="EndDate" lay-verify="required|date" namemsg="结束日期" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label layui-form-label-width">是否启用</label>
+                <div class="layui-input-block layui-input-block-width">
+                    <input type="checkbox" name="IsEnable" lay-skin="switch" lay-text="开启|关闭" value="true" checked>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block layui-input-block-width">
+                    <button class="layui-btn" lay-submit="action" lay-filter="action">确定</button>
+                    <a class="layui-btn layui-btn-primary" id="closeLayer">取消</a>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</div>
+<script>
+        layui.use(['element', 'form', 'laydate'], function () {
+            var form = layui.form, element = layui.element, laydate = layui.laydate, $ = layui.$;
+            var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+            //监听提交
+            form.on('submit(action)', function (data) {
+                $.ajax({
+                    url: '/Prize/AddPrizeData',
+                    data: data.field,
+                    type: 'post',
+                    dataType: "json",
+                    success: function (data, status) {
+                        if (data.Success) {
+                            layer.msg('提交成功', { icon: 1 });
+                            parent.layer.close(index);
+                        } else {
+                            layer.msg(data.Message, { icon: 2 });
+                        }
+                    },
+                    beforeSend: function () {
+                        layer.load("loading");
+                    },
+                    complete: function () {
+                        layer.closeAll('loading');
+                    }
+                });
+                return false;
+            });
+
+            $("#closeLayer").click(function () {
+                parent.layer.close(index);
+            });
+
+            //日期有效范围
+            var start = laydate.render({
+                elem: '#start', done: function (value, date) {
+                    var now = new Date(value);
+                    end.config.min.year = now.getFullYear();
+                    end.config.min.month = now.getMonth();
+                    end.config.min.date = now.getDate();
+                }
+            });
+
+            var end = laydate.render({
+                elem: '#end', done: function (value, date) {
+                    var now = new Date(value);
+                    start.config.max.year = now.getFullYear();
+                    start.config.max.month = now.getMonth();
+                    start.config.max.date = now.getDate();
+                }
+            });
+        });
+</script>
+

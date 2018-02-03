@@ -1,0 +1,9 @@
+﻿namespace Ticket.Model.WeiXin
+{
+    public class WeiXinIntegralConfigListDto
+    {
+        public string Name { get; set; }
+        public int Type { get; set; }
+        public double Integral { get; set; }
+    }
+}
