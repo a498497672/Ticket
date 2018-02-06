@@ -24,6 +24,7 @@ namespace Ticket.EntityFramework
         public virtual DbSet<Tbl_WeiXinPrize> Tbl_WeiXinPrize { get; set; }
         public virtual DbSet<Tbl_WeiXinPrizeConfig> Tbl_WeiXinPrizeConfig { get; set; }
         public virtual DbSet<Tbl_WeiXinPrizeUser> Tbl_WeiXinPrizeUser { get; set; }
+        public virtual DbSet<Tbl_Ticket> Tbl_Ticket { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -94,6 +95,30 @@ namespace Ticket.EntityFramework
             modelBuilder.Entity<Tbl_WeiXinIntegralDetails>()
                 .Property(e => e.TradeMoney)
                 .HasPrecision(8, 2);
+
+            modelBuilder.Entity<Tbl_Ticket>()
+                .Property(e => e.MarkPrice)
+                .HasPrecision(9, 2);
+
+            modelBuilder.Entity<Tbl_Ticket>()
+                .Property(e => e.SalePrice)
+                .HasPrecision(9, 2);
+
+            modelBuilder.Entity<Tbl_Ticket>()
+                .Property(e => e.SettlementPrice)
+                .HasPrecision(9, 2);
+
+            modelBuilder.Entity<Tbl_Ticket>()
+                .Property(e => e.LossFee)
+                .HasPrecision(9, 2);
+
+            modelBuilder.Entity<Tbl_Ticket>()
+                .Property(e => e.Code)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Tbl_Ticket>()
+                .Property(e => e.PicturePath)
+                .IsUnicode(false);
         }
     }
 }

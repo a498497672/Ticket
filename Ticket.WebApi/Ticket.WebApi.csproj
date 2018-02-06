@@ -129,7 +129,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AutoFac\WebApiAutofacModule.cs" />
+    <Compile Include="AutoMapper\UserProfile.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\IntegralController.cs" />
+    <Compile Include="Controllers\MemberController.cs" />
+    <Compile Include="Controllers\OrderController.cs" />
+    <Compile Include="Controllers\PrizeController.cs" />
+    <Compile Include="Controllers\ScenicController.cs" />
+    <Compile Include="Controllers\SoundWallController.cs" />
+    <Compile Include="Controllers\TicketController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\WxController.cs" />
     <Compile Include="Controllers\WxPayController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

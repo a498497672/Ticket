@@ -1,0 +1,81 @@
+﻿
+@{
+    ViewBag.Title = "积分设置";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+<div class="layui-main-common">
+    <div class="buyTicketTitle">
+        <div class="buyTicketTitleAll">
+            <a href=""></a><span>用户管理 > 积分设置</span>
+        </div>
+    </div>
+    <div style="width: 650px; margin-top:15px;">
+        <form class="layui-form" action="">
+            <div class="layui-form-item">
+                <label class="layui-form-label" style="width: 120px;">每天第一次登录，赠送</label>
+                <div class="layui-input-inline" style="width: 70px;">
+                    <input type="text" name="Everyday" lay-verify="required|number|number2" autocomplete="off" placeholder="" class="layui-input" value="@Model.Everyday">
+                </div>
+                <div class="layui-form-mid">积分</div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label" style="width: 120px;">每充值1元，赠送</label>
+                <div class="layui-input-inline" style="width: 70px;">
+                    <input type="text" name="Recharge" lay-verify="required|number|number2" autocomplete="off" placeholder="" class="layui-input" value="@Model.Recharge">
+                </div>
+                <div class="layui-form-mid">积分</div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label" style="width: 120px;">每消费1元，赠送</label>
+                <div class="layui-input-inline" style="width: 70px;">
+                    <input type="text" name="Consumption" lay-verify="required|number|number2" autocomplete="off" placeholder="" class="layui-input" value="@Model.Consumption">
+                </div>
+                <div class="layui-form-mid">积分</div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block layui-input-block-width">
+                    <button class="layui-btn" lay-submit="action" lay-filter="action">保存</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</div>
+<script>
+        layui.use(['element', 'form', 'laydate'], function () {
+            var form = layui.form, element = layui.element, $ = layui.$;
+
+            form.verify({
+                number2: function (value, item) { //value：表单的值、item：表单的DOM对象
+                    if (value <= 0) {
+                        return '必须大于0';
+                    }
+                }
+            });
+
+            //监听提交
+            form.on('submit(action)', function (data) {
+                $.ajax({
+                    url: '/Integral/Save',
+                    data: data.field,
+                    type: 'post',
+                    dataType: "json",
+                    success: function (data, status) {
+                        if (data.Success) {
+                            layer.msg('保存成功', { icon: 1 });
+                        } else {
+                            layer.msg(data.Message, { icon: 2 });
+                        }
+                    },
+                    beforeSend: function () {
+                        layer.load("loading");
+                    },
+                    complete: function () {
+                        layer.closeAll('loading');
+                    }
+                });
+                return false;
+            });
+        });
+</script>
+

@@ -9,7 +9,7 @@ using Ticket.Model.Order;
 namespace Ticket.WebApi.Controllers
 {
     /// <summary>
-    /// 
+    /// 微信支付
     /// </summary>
     [RoutePrefix("api/WxPay")]
     public class WxPayController : ApiController

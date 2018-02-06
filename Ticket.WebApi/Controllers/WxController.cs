@@ -14,7 +14,7 @@ namespace Ticket.WebApi.Controllers
     /// <summary>
     /// 
     /// </summary>
-    [RoutePrefix("api/wx")]
+    [RoutePrefix("api/Wx")]
     public class WxController : ApiController
     {
         private readonly WxPayFacadeService _wxPayFacadeService;
@@ -28,12 +28,30 @@ namespace Ticket.WebApi.Controllers
         }
 
         /// <summary>
+        /// 获取AppId
+        /// </summary>
+        /// <response code="200">成功.</response>
+        /// <response code="404">数据不存在.</response>
+        [Route("GetAppId")]
+        [ResponseType(typeof(TResult<string>))]
+        public IHttpActionResult GetAppId()
+        {
+            var appId = _wxPayFacadeService.GetAppId();
+            if (string.IsNullOrEmpty(appId))
+            {
+                return NotFound();
+            }
+            var result = new TResult<string>();
+            return Ok(result.SuccessResult(appId));
+        }
+
+        /// <summary>
         /// 微信授权
         /// </summary>
         /// <response code="200">成功.</response>
         /// <param name="code">微信用户授权Code</param>
         /// <returns></returns>
-        [Route("wxOAuth")]
+        [Route("GetWxOAuth")]
         [ResponseType(typeof(TResult<string>))]
         public IHttpActionResult GetWxOAuth(string code)
         {

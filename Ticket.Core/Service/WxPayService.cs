@@ -21,6 +21,11 @@ namespace Ticket.Core.Service
             _paymentGateway = paymentGateway;
         }
 
+        public string GetAppId()
+        {
+            return _paymentGateway.GetAppId();
+        }
+
         /// <summary>
         /// 获取微信用户唯一标识
         /// </summary>

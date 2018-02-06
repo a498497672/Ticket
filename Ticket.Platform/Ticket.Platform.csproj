@@ -242,6 +242,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\IntegralController.cs" />
     <Compile Include="Controllers\PrizeController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\PageSettingController.cs" />
@@ -268,6 +269,7 @@
     <Content Include="Views\PageSetting\List.cshtml" />
     <Content Include="Views\PageSetting\Add.cshtml" />
     <Content Include="Views\PageSetting\Update.cshtml" />
+    <Content Include="Views\Integral\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

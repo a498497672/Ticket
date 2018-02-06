@@ -16,6 +16,11 @@ namespace Ticket.Infrastructure.WxPay
             _userInfoQuery = new UserInfoQuery();
         }
 
+        public string GetAppId()
+        {
+            return WxPayConfig.APPID;
+        }
+
         /// <summary>
         /// 从统一下单成功返回的数据中获取微信浏览器调起jsapi支付所需的参数
         /// </summary>

@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using Autofac.Features.ResolveAnything;
 using Autofac.Integration.WebApi;
+using AutoMapper;
 using Microsoft.Owin.Cors;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -11,9 +12,11 @@ using System.Linq;
 using System.Net.Http.Formatting;
 using System.Web.Http;
 using System.Web.Http.ExceptionHandling;
+using Ticket.EntityFramework.Autofac;
 using Ticket.Utility.MessageHandlers;
 using Ticket.Utility.Services;
 using Ticket.WebApi.AutoFac;
+using Ticket.WebApi.AutoMapper;
 
 namespace Ticket.WebApi
 {
@@ -49,7 +52,7 @@ namespace Ticket.WebApi
             var builder = new ContainerBuilder();
             builder.RegisterSource(new AnyConcreteTypeNotAlreadyRegisteredSource());
             builder.RegisterModule(new WebApiAutofacModule());
-            //builder.RegisterModule(new EntityFrameworkAutofacModule());
+            builder.RegisterModule(new EntityFrameworkAutofacModule());
             var container = builder.Build();
             _httpConfig.DependencyResolver = new AutofacWebApiDependencyResolver(container);
             app.UseAutofacMiddleware(container);
@@ -71,12 +74,12 @@ namespace Ticket.WebApi
 
         private void ConfigureAutoMapper()
         {
-            //Mapper.Initialize(cfg =>
-            //{
-            //    cfg.AddProfile<AddressProfile>();
-            //    cfg.AddProfile<ScenicManagerProfile>();
-            //    cfg.AddProfile<ScenicSpotProfile>();
-            //});
+            Mapper.Initialize(cfg =>
+            {
+                cfg.AddProfile<UserProfile>();
+                //cfg.AddProfile<ScenicManagerProfile>();
+                //cfg.AddProfile<ScenicSpotProfile>();
+            });
         }
 
         private void ConfigureSwagger()

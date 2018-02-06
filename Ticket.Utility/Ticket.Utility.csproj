@@ -44,6 +44,7 @@
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
@@ -63,10 +64,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exceptions\ModelStateDictionaryExtension.cs" />
     <Compile Include="Exceptions\PredicateBuilder.cs" />
     <Compile Include="Exceptions\SimpleBadRequestException.cs" />
     <Compile Include="Exceptions\SimplePromptException.cs" />
     <Compile Include="Exceptions\SimpleUnauthorizedException.cs" />
+    <Compile Include="Helper\IdCardHelper.cs" />
     <Compile Include="Helper\EnumHelper.cs" />
     <Compile Include="Helper\PaginationHelper.cs" />
     <Compile Include="Logger\SimpleLogger.cs" />
@@ -83,6 +86,7 @@
     <Compile Include="Services\UnhandledExceptionHandler.cs" />
     <Compile Include="Services\UnhandledExceptionLogger.cs" />
     <Compile Include="UnitOfWorks\UnitOfWork.cs" />
+    <Compile Include="Validation\IdCardAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

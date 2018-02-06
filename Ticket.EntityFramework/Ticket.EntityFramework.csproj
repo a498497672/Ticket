@@ -53,9 +53,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Autofac\EntityFrameworkAutofacModule.cs" />
-    <Compile Include="Migrations\201802020639190_start.cs" />
-    <Compile Include="Migrations\201802020639190_start.Designer.cs">
-      <DependentUpon>201802020639190_start.cs</DependentUpon>
+    <Compile Include="Entities\Tbl_Ticket.cs" />
+    <Compile Include="Migrations\201802060923592_create.cs" />
+    <Compile Include="Migrations\201802060923592_create.Designer.cs">
+      <DependentUpon>201802060923592_create.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -81,8 +82,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201802020639190_start.resx">
-      <DependentUpon>201802020639190_start.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201802060923592_create.resx">
+      <DependentUpon>201802060923592_create.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

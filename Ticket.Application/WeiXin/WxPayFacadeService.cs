@@ -16,6 +16,11 @@ namespace Ticket.Application.WeiXin
             _wxPayService = wxPayService;
         }
 
+        public string GetAppId()
+        {
+            return _wxPayService.GetAppId();
+        }
+
         /// <summary>
         /// 获取微信用户唯一标识
         /// </summary>

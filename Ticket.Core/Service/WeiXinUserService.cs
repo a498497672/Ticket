@@ -3,6 +3,7 @@ using Ticket.Core.Repository;
 using Ticket.EntityFramework;
 using Ticket.EntityFramework.Entities;
 using Ticket.Infrastructure.WxPay;
+using Ticket.Utility.Exceptions;
 
 namespace Ticket.Core.Service
 {
@@ -15,9 +16,6 @@ namespace Ticket.Core.Service
             _weiXinUserRepository = weiXinUserRepository;
             _paymentGateway = paymentGateway;
         }
-
-
-
 
         /// <summary>
         /// 获取用户信息
@@ -45,6 +43,29 @@ namespace Ticket.Core.Service
             user.Password = "";
             user.Mobile = "";
             _weiXinUserRepository.Add(user);
+        }
+
+        /// <summary>
+        /// 修改
+        /// </summary>
+        /// <param name="user"></param>
+        public void Update(Tbl_WeiXin_User user)
+        {
+            _weiXinUserRepository.Update(user);
+        }
+
+        /// <summary>
+        /// 加入会员
+        /// </summary>
+        /// <param name="user"></param>
+        public void AddMembership(Tbl_WeiXin_User user)
+        {
+            if (user.IsMemberUser)
+            {
+                throw new SimplePromptException("您已经是会员用户");
+            }
+            user.IsMemberUser = true;
+            _weiXinUserRepository.Update(user);
         }
     }
 }

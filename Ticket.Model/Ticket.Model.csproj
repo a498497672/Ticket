@@ -31,6 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -44,6 +45,8 @@
     <Compile Include="Enum\IntegralType.cs" />
     <Compile Include="Enum\PayType.cs" />
     <Compile Include="Enum\PrizeTypeEnum.cs" />
+    <Compile Include="Enum\SexType.cs" />
+    <Compile Include="Enum\TicketDataStatusEnum.cs" />
     <Compile Include="Order\OrderCreateDto.cs" />
     <Compile Include="Prize\WeiXinAvailableCouponsDto.cs" />
     <Compile Include="Prize\WeiXinPrizeConfigDTO.cs" />
@@ -55,6 +58,11 @@
     <Compile Include="Prize\WeiXinPrizeViewDTO.cs" />
     <Compile Include="Prize\WeiXinPrizeWinningDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Scenic\ScenicViewDto.cs" />
+    <Compile Include="Scenic\TicketViewDto.cs" />
+    <Compile Include="User\UserAddMembershipDto.cs" />
+    <Compile Include="User\UserUpdateDto.cs" />
+    <Compile Include="User\UserViewDto.cs" />
     <Compile Include="WeiXin\WeiXinBannerDto.cs" />
     <Compile Include="WeiXin\WeiXinBannerItemDto.cs" />
     <Compile Include="WeiXin\WeiXinBannerListDto.cs" />
