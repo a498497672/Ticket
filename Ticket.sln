@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ticket.WebApi", "Ticket.Web
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ticket.Infrastructure.WxPay", "Ticket.Infrastructure.WxPay\Ticket.Infrastructure.WxPay.csproj", "{8FAA533F-B9BC-469D-B43A-B1938E165DE0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ticket.Infrastructure.Sms", "Ticket.Infrastructure.Sms\Ticket.Infrastructure.Sms.csproj", "{7981092D-E266-4A48-BE73-B7C8130E8502}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +59,10 @@ Global
 		{8FAA533F-B9BC-469D-B43A-B1938E165DE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8FAA533F-B9BC-469D-B43A-B1938E165DE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8FAA533F-B9BC-469D-B43A-B1938E165DE0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7981092D-E266-4A48-BE73-B7C8130E8502}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7981092D-E266-4A48-BE73-B7C8130E8502}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7981092D-E266-4A48-BE73-B7C8130E8502}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7981092D-E266-4A48-BE73-B7C8130E8502}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -2,16 +2,15 @@
 using System;
 using System.Web;
 using System.Web.Security;
-using System.Web.UI;
 
 namespace Ticket.Infrastructure.WxPay
 {
     public class JsApiPay
     {
         /// <summary>
-        /// 保存页面对象，因为要在类的方法中使用Page的Request对象
+        /// 保存页面对象，因为要在类的方法中使用HttpContext的Request对象
         /// </summary>
-        private Page page {get;set;}
+        private HttpContext _httpContext {get;set;}
 
         /// <summary>
         /// openid用于调用统一下单接口
@@ -29,13 +28,28 @@ namespace Ticket.Infrastructure.WxPay
         public int total_fee { get; set; }
 
         /// <summary>
+        /// 商品简单描述，该字段请按照规范传递
+        /// </summary>
+        public string body { get; set; }
+
+        /// <summary>
+        /// 附加数据，在查询API和支付通知中原样返回，可作为自定义参数使用。
+        /// </summary>
+        public string attach { get; set; }
+
+        /// <summary>
+        /// 商户订单号
+        /// </summary>
+        public string out_trade_no { get; set; }
+
+        /// <summary>
         /// 统一下单接口返回结果
         /// </summary>
         public WxPayData unifiedOrderResult { get; set; } 
 
-        public JsApiPay(Page page)
+        public JsApiPay(HttpContext httpContext)
         {
-            this.page = page;
+            this._httpContext = httpContext;
         }
 
 
@@ -49,18 +63,18 @@ namespace Ticket.Infrastructure.WxPay
         */
         public void GetOpenidAndAccessToken()
         {
-            if (!string.IsNullOrEmpty(page.Request.QueryString["code"]))
+            if (!string.IsNullOrEmpty(_httpContext.Request.QueryString["code"]))
             {
                 //获取code码，以获取openid和access_token
-                string code = page.Request.QueryString["code"];
+                string code = _httpContext.Request.QueryString["code"];
                 Log.Debug(this.GetType().ToString(), "Get code : " + code);
                 GetOpenidAndAccessTokenFromCode(code);
             }
             else
             {
                 //构造网页授权获取code的URL
-                string host = page.Request.Url.Host;
-                string path = page.Request.Path;
+                string host = _httpContext.Request.Url.Host;
+                string path = _httpContext.Request.Path;
                 string redirect_uri = HttpUtility.UrlEncode("http://" + host + path);
                 WxPayData data = new WxPayData();
                 data.SetValue("appid", WxPayConfig.APPID);
@@ -73,7 +87,7 @@ namespace Ticket.Infrastructure.WxPay
                 try
                 {
                     //触发微信返回code码         
-                    page.Response.Redirect(url);//Redirect函数会抛出ThreadAbortException异常，不用处理这个异常
+                    _httpContext.Response.Redirect(url);//Redirect函数会抛出ThreadAbortException异常，不用处理这个异常
                 }
                 catch(System.Threading.ThreadAbortException ex)
                 {
@@ -141,13 +155,13 @@ namespace Ticket.Infrastructure.WxPay
         {
             //统一下单
             WxPayData data = new WxPayData();
-            data.SetValue("body", "test");
-            data.SetValue("attach", "test");
-            data.SetValue("out_trade_no", WxPayApi.GenerateOutTradeNo());
+            data.SetValue("body", body);
+            data.SetValue("attach", attach);
+            data.SetValue("out_trade_no", out_trade_no);
             data.SetValue("total_fee", total_fee);
             data.SetValue("time_start", DateTime.Now.ToString("yyyyMMddHHmmss"));
             data.SetValue("time_expire", DateTime.Now.AddMinutes(10).ToString("yyyyMMddHHmmss"));
-            data.SetValue("goods_tag", "test");
+            //data.SetValue("goods_tag", "test");
             data.SetValue("trade_type", "JSAPI");
             data.SetValue("openid", openid);
 
@@ -207,9 +221,9 @@ namespace Ticket.Infrastructure.WxPay
             string parameter = "";
             try
             {
-                string host = page.Request.Url.Host;
-                string path = page.Request.Path;
-                string queryString = page.Request.Url.Query;
+                string host = _httpContext.Request.Url.Host;
+                string path = _httpContext.Request.Path;
+                string queryString = _httpContext.Request.Url.Query;
                 //这个地方要注意，参与签名的是网页授权获取用户信息时微信后台回传的完整url
                 string url = "http://" + host + path + queryString;
 

@@ -65,6 +65,7 @@
   <ItemGroup>
     <Compile Include="Exceptions\PredicateBuilder.cs" />
     <Compile Include="Exceptions\SimpleBadRequestException.cs" />
+    <Compile Include="Exceptions\SimplePromptException.cs" />
     <Compile Include="Exceptions\SimpleUnauthorizedException.cs" />
     <Compile Include="Helper\EnumHelper.cs" />
     <Compile Include="Helper\PaginationHelper.cs" />
@@ -75,6 +76,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Results\SimpleBadRequestResult.cs" />
     <Compile Include="Results\SimpleInternalServerErrorResult.cs" />
+    <Compile Include="Results\SimplePromptRequestResult.cs" />
     <Compile Include="Searchs\PagedResult.cs" />
     <Compile Include="Searchs\TPageResult.cs" />
     <Compile Include="Searchs\TResult.cs" />

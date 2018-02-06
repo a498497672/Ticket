@@ -8,14 +8,14 @@ namespace Ticket.Application.Prize
 {
     public class PrizeFacadeService
     {
-        private readonly WeiXinPrizeService _weiXinPrizeService;
-        private readonly WeiXinPrizeConfigService _weiXinPrizeConfigService;
-        private readonly WeiXinPrizeUserService _weiXinPrizeUserService;
+        private readonly PrizeService _weiXinPrizeService;
+        private readonly PrizeConfigService _weiXinPrizeConfigService;
+        private readonly PrizeUserService _weiXinPrizeUserService;
 
         public PrizeFacadeService(
-            WeiXinPrizeService weiXinPrizeService,
-            WeiXinPrizeConfigService weiXinPrizeConfigService,
-            WeiXinPrizeUserService weiXinPrizeUserService)
+            PrizeService weiXinPrizeService,
+            PrizeConfigService weiXinPrizeConfigService,
+            PrizeUserService weiXinPrizeUserService)
         {
             _weiXinPrizeService = weiXinPrizeService;
             _weiXinPrizeConfigService = weiXinPrizeConfigService;

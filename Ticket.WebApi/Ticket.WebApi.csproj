@@ -60,6 +60,12 @@
     <Reference Include="AutoMapper, Version=4.2.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
       <HintPath>..\packages\AutoMapper.4.2.1\lib\net45\AutoMapper.dll</HintPath>
     </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.7\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
@@ -122,9 +128,10 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="AutoFac\WebApiAutofacModule.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
+    <Compile Include="Controllers\WxController.cs" />
+    <Compile Include="Controllers\WxPayController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -139,7 +146,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
+    <Folder Include="cert\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
@@ -150,6 +157,10 @@
     <ProjectReference Include="..\Ticket.EntityFramework\Ticket.EntityFramework.csproj">
       <Project>{11130ce4-0e26-4db5-a8ed-6cb3afdfed07}</Project>
       <Name>Ticket.EntityFramework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Ticket.Infrastructure.WxPay\Ticket.Infrastructure.WxPay.csproj">
+      <Project>{8FAA533F-B9BC-469D-B43A-B1938E165DE0}</Project>
+      <Name>Ticket.Infrastructure.WxPay</Name>
     </ProjectReference>
     <ProjectReference Include="..\Ticket.Model\Ticket.Model.csproj">
       <Project>{65b80edc-1d61-419d-9e36-bd941b70ef19}</Project>

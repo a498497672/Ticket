@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using System.Web;
 using System.Web.UI;
 
 namespace Ticket.Infrastructure.WxPay
@@ -10,10 +11,10 @@ namespace Ticket.Infrastructure.WxPay
     /// </summary>
     public class Notify
     {
-        public Page page {get;set;}
-        public Notify(Page page)
+        public HttpContext _httpContext {get;set;}
+        public Notify(HttpContext httpContext)
         {
-            this.page = page;
+            this._httpContext = httpContext;
         }
 
         /// <summary>
@@ -23,7 +24,7 @@ namespace Ticket.Infrastructure.WxPay
         public WxPayData GetNotifyData()
         {
             //接收从微信后台POST过来的数据
-            System.IO.Stream s = page.Request.InputStream;
+            System.IO.Stream s = _httpContext.Request.InputStream;
             int count = 0;
             byte[] buffer = new byte[1024];
             StringBuilder builder = new StringBuilder();
@@ -50,8 +51,8 @@ namespace Ticket.Infrastructure.WxPay
                 res.SetValue("return_code", "FAIL");
                 res.SetValue("return_msg", ex.Message);
                 Log.Error(this.GetType().ToString(), "Sign check error : " + res.ToXml());
-                page.Response.Write(res.ToXml());
-                page.Response.End();
+                _httpContext.Response.Write(res.ToXml());
+                _httpContext.Response.End();
             }
 
             Log.Info(this.GetType().ToString(), "Check sign success");

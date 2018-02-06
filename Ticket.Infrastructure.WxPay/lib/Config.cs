@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Web;
 
 namespace Ticket.Infrastructure.WxPay
@@ -16,23 +17,23 @@ namespace Ticket.Infrastructure.WxPay
         * KEY：商户支付密钥，参考开户邮件设置（必须配置）
         * APPSECRET：公众帐号secert（仅JSAPI支付的时候需要配置）
         */
-        public const string APPID = "wx2428e34e0e7dc6ef";
-        public const string MCHID = "1233410002";
-        public const string KEY = "e10adc3849ba56abbe56e056f20f883e";
-        public const string APPSECRET = "51c56b886b5be869567dd389b3e5d1d6";
+        public static readonly string APPID = ConfigurationManager.AppSettings["WxPay:AppID"];
+        public static readonly string MCHID = ConfigurationManager.AppSettings["WxPay:MchId"];
+        public static readonly string KEY = ConfigurationManager.AppSettings["WxPay:PartnerKey"];
+        public static readonly string APPSECRET = ConfigurationManager.AppSettings["WxPay:AppSecret"];
 
         //=======【证书路径设置】===================================== 
         /* 证书路径,注意应该填写绝对路径（仅退款、撤销订单时需要）
         */
         public const string SSLCERT_PATH = "cert/apiclient_cert.p12";
-        public const string SSLCERT_PASSWORD = "1233410002";
+        public static readonly string SSLCERT_PASSWORD = MCHID;
 
 
 
         //=======【支付结果通知url】===================================== 
         /* 支付结果通知回调url，用于商户接收支付结果
         */
-        public const string NOTIFY_URL = "http://paysdk.weixin.qq.com/example/ResultNotifyPage.aspx";
+        public static readonly string NOTIFY_URL = ConfigurationManager.AppSettings["WxPay:Notify_url"];
 
         //=======【商户系统后台机器IP】===================================== 
         /* 此参数可手动配置也可在程序中自动获取

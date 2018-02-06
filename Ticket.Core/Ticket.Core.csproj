@@ -58,11 +58,11 @@
     <Compile Include="Repository\SoundWallRepository.cs" />
     <Compile Include="Repository\WeiXinUserRepository.cs" />
     <Compile Include="Repository\BannerRepository.cs" />
-    <Compile Include="Repository\WeiXinIntegralConfigRepository.cs" />
-    <Compile Include="Repository\WeiXinIntegralDetailsRepository.cs" />
-    <Compile Include="Repository\WeiXinPrizeRepository.cs" />
-    <Compile Include="Repository\WeiXinPrizeConfigRepository.cs" />
-    <Compile Include="Repository\WeiXinPrizeUserRepository.cs" />
+    <Compile Include="Repository\IntegralConfigRepository.cs" />
+    <Compile Include="Repository\IntegralDetailsRepository.cs" />
+    <Compile Include="Repository\PrizeRepository.cs" />
+    <Compile Include="Repository\PrizeConfigRepository.cs" />
+    <Compile Include="Repository\PrizeUserRepository.cs" />
     <Compile Include="Repository\OrderRepository.cs" />
     <Compile Include="Service\MemberTypeService.cs" />
     <Compile Include="Service\MsgService.cs" />
@@ -72,12 +72,13 @@
     <Compile Include="Service\SoundWallService.cs" />
     <Compile Include="Service\UserService.cs" />
     <Compile Include="Service\BannerService.cs" />
-    <Compile Include="Service\WeiXinIntegralConfigService.cs" />
-    <Compile Include="Service\WeiXinIntegralDetailsRepository.cs" />
-    <Compile Include="Service\WeiXinPrizeConfigService.cs" />
-    <Compile Include="Service\WeiXinPrizeService.cs" />
-    <Compile Include="Service\WeiXinPrizeUserService.cs" />
+    <Compile Include="Service\IntegralConfigService.cs" />
+    <Compile Include="Service\IntegralDetailsService.cs" />
+    <Compile Include="Service\PrizeConfigService.cs" />
+    <Compile Include="Service\PrizeService.cs" />
+    <Compile Include="Service\PrizeUserService.cs" />
     <Compile Include="Service\WeiXinUserService.cs" />
+    <Compile Include="Service\WxPayService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -88,6 +89,14 @@
     <ProjectReference Include="..\Ticket.EntityFramework\Ticket.EntityFramework.csproj">
       <Project>{11130ce4-0e26-4db5-a8ed-6cb3afdfed07}</Project>
       <Name>Ticket.EntityFramework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Ticket.Infrastructure.Sms\Ticket.Infrastructure.Sms.csproj">
+      <Project>{7981092d-e266-4a48-be73-b7c8130e8502}</Project>
+      <Name>Ticket.Infrastructure.Sms</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Ticket.Infrastructure.WxPay\Ticket.Infrastructure.WxPay.csproj">
+      <Project>{8faa533f-b9bc-469d-b43a-b1938e165de0}</Project>
+      <Name>Ticket.Infrastructure.WxPay</Name>
     </ProjectReference>
     <ProjectReference Include="..\Ticket.Model\Ticket.Model.csproj">
       <Project>{65b80edc-1d61-419d-9e36-bd941b70ef19}</Project>

@@ -11,16 +11,16 @@ using Ticket.Utility.Searchs;
 
 namespace Ticket.Core.Service
 {
-    public class WeiXinPrizeUserService
+    public class PrizeUserService
     {
-        private readonly WeiXinPrizeUserRepository _weiXinPrizeUserRepository;
+        private readonly PrizeUserRepository _weiXinPrizeUserRepository;
         private readonly WeiXinUserRepository _weiXinUserRepository;
-        private readonly WeiXinPrizeRepository _weiXinPrizeRepository;
+        private readonly PrizeRepository _weiXinPrizeRepository;
 
-        public WeiXinPrizeUserService(
-            WeiXinPrizeUserRepository weiXinPrizeUserRepository,
+        public PrizeUserService(
+            PrizeUserRepository weiXinPrizeUserRepository,
             WeiXinUserRepository weiXinUserRepository,
-            WeiXinPrizeRepository weiXinPrizeRepository)
+            PrizeRepository weiXinPrizeRepository)
         {
             _weiXinPrizeUserRepository = weiXinPrizeUserRepository;
             _weiXinUserRepository = weiXinUserRepository;

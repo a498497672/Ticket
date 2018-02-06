@@ -28,6 +28,11 @@ namespace Ticket.Utility.Services
                 var authenticationHeaderValues = new List<AuthenticationHeaderValue> { context.Request.Headers.Authorization };
                 context.Result = new UnauthorizedResult(authenticationHeaderValues, context.Request);
             }
+            else if (exceptionType == typeof(SimplePromptException))
+            {
+                var errorMessage = new ErrorMessage { Code = 500, Message = exception.Message };
+                context.Result = new SimplePromptRequestResult(context.Request, errorMessage);
+            }
             else
             {
                 context.Result = new SimpleInternalServerErrorResult(context.Request, "UnhandledException");

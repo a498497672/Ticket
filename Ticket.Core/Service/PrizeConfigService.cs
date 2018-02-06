@@ -5,14 +5,14 @@ using Ticket.Utility.Searchs;
 
 namespace Ticket.Core.Service
 {
-    public class WeiXinPrizeConfigService
+    public class PrizeConfigService
     {
-        private readonly WeiXinPrizeConfigRepository _weiXinPrizeConfigRepository;
-        private readonly WeiXinPrizeUserService _weiXinPrizeUserService;
+        private readonly PrizeConfigRepository _weiXinPrizeConfigRepository;
+        private readonly PrizeUserService _weiXinPrizeUserService;
 
-        public WeiXinPrizeConfigService(
-            WeiXinPrizeConfigRepository weiXinPrizeConfigRepository,
-            WeiXinPrizeUserService weiXinPrizeUserService)
+        public PrizeConfigService(
+            PrizeConfigRepository weiXinPrizeConfigRepository,
+            PrizeUserService weiXinPrizeUserService)
         {
             _weiXinPrizeConfigRepository = weiXinPrizeConfigRepository;
             _weiXinPrizeUserService = weiXinPrizeUserService;

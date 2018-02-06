@@ -3,7 +3,7 @@ using Ticket.EntityFramework.Entities;
 
 namespace Ticket.Core.Service
 {
-    public class WeiXinIntegralConfigService
+    public class IntegralConfigService
     { 
 
     }

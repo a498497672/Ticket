@@ -8,11 +8,11 @@ using Ticket.Utility.Searchs;
 
 namespace Ticket.Core.Service
 {
-    public class WeiXinPrizeService
+    public class PrizeService
     {
-        private readonly WeiXinPrizeRepository _weiXinPrizeRepository;
+        private readonly PrizeRepository _weiXinPrizeRepository;
 
-        public WeiXinPrizeService(WeiXinPrizeRepository weiXinPrizeRepository)
+        public PrizeService(PrizeRepository weiXinPrizeRepository)
         {
             _weiXinPrizeRepository = weiXinPrizeRepository;
         }

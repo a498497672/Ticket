@@ -6,9 +6,9 @@ using Ticket.EntityFramework.Entities;
 
 namespace Ticket.Core.Repository
 {
-    public class WeiXinPrizeUserRepository : RepositoryBase<Tbl_WeiXinPrizeUser>
+    public class PrizeUserRepository : RepositoryBase<Tbl_WeiXinPrizeUser>
     {
-        public WeiXinPrizeUserRepository(TicketDbContext dbContext) : base(dbContext)
+        public PrizeUserRepository(TicketDbContext dbContext) : base(dbContext)
         {
 
         }
