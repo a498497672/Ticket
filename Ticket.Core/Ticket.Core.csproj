@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\OrderRefundDetailRepository.cs" />
     <Compile Include="Repository\TicketRepository.cs" />
     <Compile Include="Repository\UserRepository.cs" />
     <Compile Include="Repository\OrderDetailRepository.cs" />
@@ -57,6 +58,7 @@
     <Compile Include="Repository\MsgRepository.cs" />
     <Compile Include="Repository\ScenicRepository.cs" />
     <Compile Include="Repository\SoundWallRepository.cs" />
+    <Compile Include="Repository\ValidateCodeRepository.cs" />
     <Compile Include="Repository\WeiXinUserRepository.cs" />
     <Compile Include="Repository\BannerRepository.cs" />
     <Compile Include="Repository\IntegralConfigRepository.cs" />
@@ -68,8 +70,10 @@
     <Compile Include="Service\MemberTypeService.cs" />
     <Compile Include="Service\MsgService.cs" />
     <Compile Include="Service\OrderDetailService.cs" />
+    <Compile Include="Service\OrderRefundDetailService.cs" />
     <Compile Include="Service\OrderService.cs" />
     <Compile Include="Service\ScenicService.cs" />
+    <Compile Include="Service\SmsService.cs" />
     <Compile Include="Service\SoundWallService.cs" />
     <Compile Include="Service\TicketService.cs" />
     <Compile Include="Service\UserService.cs" />
@@ -79,6 +83,7 @@
     <Compile Include="Service\PrizeConfigService.cs" />
     <Compile Include="Service\PrizeService.cs" />
     <Compile Include="Service\PrizeUserService.cs" />
+    <Compile Include="Service\ValidateCodeService.cs" />
     <Compile Include="Service\WeiXinUserService.cs" />
     <Compile Include="Service\WxPayService.cs" />
   </ItemGroup>

@@ -50,6 +50,7 @@
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
     <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
     </Reference>
@@ -69,9 +70,12 @@
     <Compile Include="Exceptions\SimpleBadRequestException.cs" />
     <Compile Include="Exceptions\SimplePromptException.cs" />
     <Compile Include="Exceptions\SimpleUnauthorizedException.cs" />
+    <Compile Include="Helper\ClientIpHelper.cs" />
     <Compile Include="Helper\IdCardHelper.cs" />
     <Compile Include="Helper\EnumHelper.cs" />
+    <Compile Include="Helper\OrderHelper.cs" />
     <Compile Include="Helper\PaginationHelper.cs" />
+    <Compile Include="Helper\StringHelper.cs" />
     <Compile Include="Logger\SimpleLogger.cs" />
     <Compile Include="MessageHandlers\ETagHandler.cs" />
     <Compile Include="MessageHandlers\SchemaValidationMessageHandler.cs" />
@@ -86,7 +90,9 @@
     <Compile Include="Services\UnhandledExceptionHandler.cs" />
     <Compile Include="Services\UnhandledExceptionLogger.cs" />
     <Compile Include="UnitOfWorks\UnitOfWork.cs" />
+    <Compile Include="Validation\DecimalAttribute.cs" />
     <Compile Include="Validation\IdCardAttribute.cs" />
+    <Compile Include="Validation\MobileAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

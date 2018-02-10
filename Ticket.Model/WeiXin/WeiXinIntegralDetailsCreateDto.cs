@@ -8,6 +8,6 @@ namespace Ticket.Model.WeiXin
         public string OpenId { get; set; }
         public decimal Amount { get; set; }
         public IntegralType Type { get; set; }
-        public WechatPublicPayTypeEnum PayType { get; set; }
+        public PayType PayType { get; set; }
     }
 }

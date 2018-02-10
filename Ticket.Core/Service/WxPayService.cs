@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 using Ticket.Core.Repository;
 using Ticket.EntityFramework.Entities;
 using Ticket.Infrastructure.WxPay;
+using Ticket.Infrastructure.WxPay.Request;
 using Ticket.Infrastructure.WxPay.Response;
+using Ticket.Model.Order;
 using Ticket.Utility.Exceptions;
 
 namespace Ticket.Core.Service
@@ -56,12 +58,56 @@ namespace Ticket.Core.Service
             return _paymentGateway.GetJsSDKTicket(url);
         }
 
+        /// <summary>
+        /// 支付结果通知回调处理类
+        /// </summary>
+        /// <returns></returns>
+        public PayNotifyResponse PayNotify()
+        {
+            return _paymentGateway.PayNotify();
+        }
+
+        /// <summary>
+        /// 从统一下单成功返回的数据中获取微信浏览器调起jsapi支付所需的参数
+        /// 门票支付
+        /// </summary>
+        /// <returns></returns>
+        public string PayOrderForTicket(Tbl_Order tbl_Order)
+        {
+            return _paymentGateway.PayOrder(new PayRequest
+            {
+                Body = "[兄弟连] 购买门票支付",
+                OpenId = tbl_Order.OpenId,
+                OutTradeNo = tbl_Order.OrderNo,
+                TotalFee = tbl_Order.TotalAmount
+            });
+        }
+
+        /// <summary>
+        /// 订单退款--微信退款
+        /// </summary>
+        /// <param name="refundRequest"></param>
+        /// <returns></returns>
+        public void OrderRefund(OrderRefundDetailDto orderRefundDetailDto)
+        {
+            var refund = _paymentGateway.OrderRefund(new RefundRequest
+            {
+                OutRefundNo = orderRefundDetailDto.OutRefundNo,
+                TransactionId = orderRefundDetailDto.TransactionId,
+                RefundFee = orderRefundDetailDto.RefundFee,
+                TotalFee = orderRefundDetailDto.TotalFee
+            });
+            if (!refund)
+            {
+                throw new SimplePromptException("微信退款失败，请联系商家进行退款");
+            }
+        }
 
         /// <summary>
         /// 添加微信用户信息
         /// </summary>
         /// <param name="token"></param>
-        private void AddWeiXinUser(Infrastructure.WxPay.Response.AauthResponse token)
+        private void AddWeiXinUser(AauthResponse token)
         {
             var userInfo = _paymentGateway.GetUserInfo(token.AccessToken, token.Openid);
             if (userInfo == null)

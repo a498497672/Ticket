@@ -140,6 +140,7 @@
     <Compile Include="Controllers\SoundWallController.cs" />
     <Compile Include="Controllers\TicketController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\VerifCodeController.cs" />
     <Compile Include="Controllers\WxController.cs" />
     <Compile Include="Controllers\WxPayController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

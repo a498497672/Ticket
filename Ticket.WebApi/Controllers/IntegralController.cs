@@ -57,9 +57,9 @@ namespace Ticket.WebApi.Controllers
         /// <returns></returns>
         /// <response code="200">成功.</response>
         /// <response code="404">数据不存在.</response>
-        [Route("GetIntegralConfigList")]
+        [Route("GetIntegralConfig")]
         [ResponseType(typeof(TResult<List<IntegralConfigViewDto>>))]
-        public IHttpActionResult GetIntegralConfigList()
+        public IHttpActionResult GetIntegralConfig()
         {
             var list= _integralFacadeService.GetIntegralConfigList();
             var integralConfigViewDtos = Mapper.Map<List<IntegralConfigViewDto>>(list);

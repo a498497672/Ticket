@@ -25,11 +25,21 @@ namespace Ticket.Core.Service
         public List<Tbl_Ticket> GetList(DateTime playTime)
         {
             var ticketList = _ticketRepository.GetList(p =>
-                   (p.DataStatus & (int)TicketDataStatusEnum.IsStop) == 0 &&
+                   (p.DataStatus & (int)TicketStatusType.IsStop) == 0 &&
                    p.ExpiryDateStart <= playTime.Date &&
                    p.ExpiryDateEnd >= playTime.Date).ToList();
 
             return ticketList;
+        }
+
+        public Tbl_Ticket Get(DateTime playTime, int ticketId)
+        {
+            var ticket = _ticketRepository.GetList(p =>
+                    p.TicketId == ticketId &&
+                   (p.DataStatus & (int)TicketStatusType.IsStop) == 0 &&
+                   p.ExpiryDateStart <= playTime.Date &&
+                   p.ExpiryDateEnd >= playTime.Date).FirstOrDefault();
+            return ticket;
         }
     }
 }

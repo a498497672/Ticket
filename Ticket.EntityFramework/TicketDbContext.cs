@@ -25,6 +25,8 @@ namespace Ticket.EntityFramework
         public virtual DbSet<Tbl_WeiXinPrizeConfig> Tbl_WeiXinPrizeConfig { get; set; }
         public virtual DbSet<Tbl_WeiXinPrizeUser> Tbl_WeiXinPrizeUser { get; set; }
         public virtual DbSet<Tbl_Ticket> Tbl_Ticket { get; set; }
+        public virtual DbSet<Tbl_ValidateCode> Tbl_ValidateCode { get; set; }
+        public virtual DbSet<Tbl_OrderRefundDetail> Tbl_OrderRefundDetail { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -119,6 +121,18 @@ namespace Ticket.EntityFramework
             modelBuilder.Entity<Tbl_Ticket>()
                 .Property(e => e.PicturePath)
                 .IsUnicode(false);
+
+            modelBuilder.Entity<Tbl_OrderRefundDetail>()
+                .Property(e => e.Price)
+                .HasPrecision(9, 2);
+
+            modelBuilder.Entity<Tbl_OrderRefundDetail>()
+                .Property(e => e.RefundFee)
+                .HasPrecision(9, 2);
+
+            modelBuilder.Entity<Tbl_OrderRefundDetail>()
+                .Property(e => e.RefundTotalAmount)
+                .HasPrecision(9, 2);
         }
     }
 }

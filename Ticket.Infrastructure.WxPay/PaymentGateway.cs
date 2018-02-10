@@ -1,6 +1,7 @@
 ﻿using System.Web;
 using Ticket.Infrastructure.WxPay.business;
 using Ticket.Infrastructure.WxPay.jsSDK;
+using Ticket.Infrastructure.WxPay.Request;
 using Ticket.Infrastructure.WxPay.Response;
 
 namespace Ticket.Infrastructure.WxPay
@@ -24,18 +25,15 @@ namespace Ticket.Infrastructure.WxPay
         /// <summary>
         /// 从统一下单成功返回的数据中获取微信浏览器调起jsapi支付所需的参数
         /// </summary>
-        /// <param name="orderNo">订单号</param>
-        /// <param name="total">下单金额(元)</param>
-        /// <param name="openId">微信用户唯一标识</param>
-        /// <returns></returns>
-        public string PayOrder(string orderNo, decimal total, string openId)
+        /// <returns>返回微信浏览器调起jsapi支付所需的参数</returns>
+        public string PayOrder(PayRequest payRequest)
         {
             var wxPayApi = new JsApiPay(HttpContext.Current);
-            wxPayApi.body = "【风景网】点餐系统-点餐支付";
+            wxPayApi.body = payRequest.Body;
             wxPayApi.attach = "";
-            wxPayApi.openid = openId;
-            wxPayApi.out_trade_no = orderNo;
-            wxPayApi.total_fee = (int)(total * 100);//元转化为分
+            wxPayApi.openid = payRequest.OpenId;
+            wxPayApi.out_trade_no = payRequest.OutTradeNo;
+            wxPayApi.total_fee = (int)(payRequest.TotalFee * 100);//元转化为分
             wxPayApi.GetUnifiedOrderResult();
             return wxPayApi.GetJsApiParameters();
         }
@@ -45,13 +43,37 @@ namespace Ticket.Infrastructure.WxPay
         /// 负责接收微信支付后台发送的支付结果并对订单有效性进行验证，将验证结果反馈给微信支付后台
         /// </summary>
         /// <returns>返回订单号</returns>
-        public string PayNotify()
+        public PayNotifyResponse PayNotify()
         {
             var notifyResult = new ResultNotify(HttpContext.Current);
-            var wxPayData = notifyResult.ProcessNotifyExtend();
-            Log.Info("ResultNotify", wxPayData.ToJson());
-            var out_trade_no = wxPayData.GetValue("out_trade_no");
-            return out_trade_no.ToString();
+            var notifyData = notifyResult.ProcessNotifyExtend();
+            Log.Info("ResultNotify", notifyData.ToJson());
+            var out_trade_no = notifyData.GetValue("out_trade_no").ToString();
+            var openId = notifyData.GetValue("openid").ToString();
+            var transaction_id = notifyData.GetValue("transaction_id").ToString();
+            return new PayNotifyResponse
+            {
+                OutTradeNo = out_trade_no,
+                OpenId = openId,
+                TransactionId = transaction_id
+            };
+        }
+
+        /// <summary>
+        /// 订单退款
+        /// </summary>
+        /// <param name="refundRequest"></param>
+        /// <returns></returns>
+        public bool OrderRefund(RefundRequest refundRequest)
+        {
+            try
+            {
+                return Refund.Run(refundRequest);
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         /// <summary>

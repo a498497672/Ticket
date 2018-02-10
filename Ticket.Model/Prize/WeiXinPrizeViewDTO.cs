@@ -18,7 +18,7 @@ namespace Ticket.Model.Prize
         {
             get
             {
-                return ((PrizeTypeEnum)PrizeType).GetDescription<PrizeTypeEnum>();
+                return ((PrizeType)PrizeType).GetDescription<PrizeType>();
             }
         }
         public decimal Money { get; set; }

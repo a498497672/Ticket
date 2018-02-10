@@ -4,7 +4,11 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using Ticket.Application.Order;
+using Ticket.Model.Enum;
 using Ticket.Model.Order;
+using Ticket.Utility.Exceptions;
+using Ticket.Utility.Searchs;
 
 namespace Ticket.WebApi.Controllers
 {
@@ -14,6 +18,16 @@ namespace Ticket.WebApi.Controllers
     [RoutePrefix("api/WxPay")]
     public class WxPayController : ApiController
     {
+        private readonly OrderFacadeService _orderFacadeService;
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="orderFacadeService"></param>
+        public WxPayController(OrderFacadeService orderFacadeService)
+        {
+            _orderFacadeService = orderFacadeService;
+
+        }
         /// <summary>
         /// 支付结果回调
         /// </summary>
@@ -21,97 +35,86 @@ namespace Ticket.WebApi.Controllers
         [Route("Notify")]
         public IHttpActionResult Notify()
         {
+            _orderFacadeService.PayNotify();
             return Ok();
         }
 
 
         /// <summary>
-        /// 创建订单--扫一扫微信支付
+        /// 创建订单--微信支付
         /// </summary>
-        /// <param name="scenicTicket"></param>
+        /// <param name="orderCreateDto"></param>
         /// <returns></returns>
         [Route("PostCreateOrder")]
-        public IHttpActionResult PostCreateOrder(ScenicTicketDTO scenicTicket)
+        public IHttpActionResult PostCreateOrder(OrderCreateDto orderCreateDto)
         {
-            //try
-            //{
-            //    //var result = _scanTicketLogic.CreateOrder(scenicTicket);
-            //    if (scenicTicket.PayType == (int)PayType.Wechat)
-            //    {
-            //        if (result.Success)
-            //        {
-            //            Logger.Info("下单成功，进行支付,orderNo:" + result.Data.OrderNo);
-            //            //下单成功，进行支付
-            //            Pay(result.Data.OrderNo, result.Data.TicketNames, result.Data.TotalMoney.ToString());
-            //        }
-            //        else
-            //        {
-            //            Logger.Info("下单失败");
-            //        }
-            //    }
-            //    else
-            //    {
-            //        return Json(result, JsonRequestBehavior.AllowGet);
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    Logger.Info(ex.Message, ex);
-            //}
-            //return Content("");
-            return Ok();
+            if (!ModelState.IsValid)
+            {
+                var message = ModelState.BuildErrorMessage();
+                throw new SimplePromptException(message);
+            }
+            var orderCreateViewDto = _orderFacadeService.Create(orderCreateDto);
+            var result = new TResult<OrderCreateViewDto>();
+            return Ok(result.SuccessResult(orderCreateViewDto));
         }
 
-        ///// <summary>
-        ///// 再次支付订单
-        ///// </summary>
-        ///// <param name="orderNo"></param>
-        ///// <returns></returns>
-        //[HttpPost]
-        //public ActionResult PayOrder(string orderNo)
-        //{
-        //    var data = _scanTicketLogic.GetOrder(orderNo);
-        //    if (data.Status)
-        //    {
-        //        Logger.Info("再次支付，进行支付,orderNo:" + data.Data.OrderNo);
-        //        //下单成功，进行支付
-        //        Pay(data.Data.OrderNo, data.Data.TicketNames, data.Data.TotalMoney.ToString());
-        //    }
-        //    else
-        //    {
-        //        Logger.Info("再次支付失败");
-        //    }
-        //    return Content("");
-        //}
+        /// <summary>
+        /// 余额支付
+        /// </summary>
+        /// <param name="orderCreateDto"></param>
+        /// <returns></returns>
+        [Route("BalancePay")]
+        public IHttpActionResult PostBalancePay(OrderCreateDto orderCreateDto)
+        {
+            if (!ModelState.IsValid)
+            {
+                var message = ModelState.BuildErrorMessage();
+                throw new SimplePromptException(message);
+            }
+            var orderNo = _orderFacadeService.BalancePay(orderCreateDto);
+            var result = new TResult<string>();
+            return Ok(result.SuccessResult(orderNo));
+        }
 
-        ///// <summary>
-        ///// 充值
-        ///// </summary>
-        ///// <param name="model"></param>
-        ///// <returns></returns>
-        //[HttpPost]
-        //public ActionResult Recharge(WeiXinRechargeDto model)
-        //{
-        //    try
-        //    {
-        //        System.Web.HttpContext.Current.Session[CookieKey.ScenicId] = model.ScenicId;
-        //        var result = new WeiXinRechargeLogic().CreateOrder(model);
-        //        if (result.Success)
-        //        {
-        //            Logger.Info("充值下单成功，进行支付,orderNo:" + result.Data.OrderNo);
-        //            //下单成功，进行支付
-        //            Pay(result.Data.OrderNo, result.Data.TicketNames, result.Data.TotalMoney.ToString());
-        //        }
-        //        else
-        //        {
-        //            Logger.Info("下单失败");
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Logger.Info(ex.Message, ex);
-        //    }
-        //    return Content("");
-        //}
+        /// <summary>
+        /// 再次支付订单
+        /// </summary>
+        /// <param name="orderPayAgainDto"></param>
+        /// <returns></returns>
+        [Route("BalancePay")]
+        public IHttpActionResult PostPayAgain(OrderPayAgainDto orderPayAgainDto)
+        {
+            if (!ModelState.IsValid)
+            {
+                var message = ModelState.BuildErrorMessage();
+                throw new SimplePromptException(message);
+            }
+            var tbl_Order = _orderFacadeService.Get(orderPayAgainDto.OrderNo);
+            if (tbl_Order == null)
+            {
+                return NotFound();
+            }
+            var orderCreateViewDto = _orderFacadeService.PayAgain(tbl_Order);
+            var result = new TResult<OrderCreateViewDto>();
+            return Ok(result.SuccessResult(orderCreateViewDto));
+        }
+
+        /// <summary>
+        /// 充值
+        /// </summary>
+        /// <param name="orderRechargeDto"></param>
+        /// <returns></returns>
+        [Route("Recharge")]
+        public IHttpActionResult PostRecharge(OrderRechargeDto orderRechargeDto)
+        {
+            if (!ModelState.IsValid)
+            {
+                var message = ModelState.BuildErrorMessage();
+                throw new SimplePromptException(message);
+            }
+            var orderCreateViewDto = _orderFacadeService.Recharge(orderRechargeDto);
+            var result = new TResult<OrderCreateViewDto>();
+            return Ok(result.SuccessResult(orderCreateViewDto));
+        }
     }
 }

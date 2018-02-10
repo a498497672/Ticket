@@ -65,6 +65,18 @@ namespace Ticket.EntityFramework
             return _dbset.Where(predicate).FirstOrDefault();
         }
 
+        public TEntity FirstOrDefault<S>(Expression<Func<TEntity, bool>> whereLambda, Expression<Func<TEntity, S>> orderbyLambda, bool isAsc = true)
+        {
+            if (isAsc)
+            {
+                return _dbset.Where(whereLambda).OrderBy(orderbyLambda).FirstOrDefault();
+            }
+            else
+            {
+                return _dbset.Where(whereLambda).OrderByDescending(orderbyLambda).FirstOrDefault();
+            }
+        }
+
         public TEntity FirstOrDefault()
         {
             return _dbset.AsQueryable().FirstOrDefault();

@@ -71,12 +71,60 @@ namespace Ticket.Core.Service
             }
         }
 
+        /// <summary>
+        /// 添加用户积分--余额消费
+        /// </summary>
+        /// <param name="tbl_Order"></param>
+        public void AddForBalanceConsumption(Tbl_Order tbl_Order)
+        {
+            AddIntegral(new WeiXinIntegralDetailsCreateDto
+            {
+                OpenId = tbl_Order.OpenId,
+                Amount = tbl_Order.TotalAmount,
+                Name = "购买景区门票",
+                Type = IntegralType.Consumption,
+                PayType = PayType.Balance
+            });
+        }
+
+        /// <summary>
+        /// 添加用户积分--微信消费
+        /// </summary>
+        /// <param name="tbl_Order"></param>
+        public void AddForWechatConsumption(Tbl_Order tbl_Order)
+        {
+            AddIntegral(new WeiXinIntegralDetailsCreateDto
+            {
+                OpenId = tbl_Order.OpenId,
+                Amount = tbl_Order.TotalAmount,
+                Name = "购买景区门票",
+                Type = IntegralType.Consumption,
+                PayType = PayType.Wechat
+            });
+        }
+
+        /// <summary>
+        /// 添加用户积分--充值
+        /// </summary>
+        /// <param name="tbl_Order"></param>
+        public void AddForRecharge(Tbl_Order tbl_Order)
+        {
+            AddIntegral(new WeiXinIntegralDetailsCreateDto
+            {
+                OpenId = tbl_Order.OpenId,
+                Amount = tbl_Order.TotalAmount,
+                Name = "购买景区门票",
+                Type = IntegralType.Recharge,
+                PayType = PayType.Balance
+            });
+        }
+
 
         /// <summary>
         /// 添加积分明细和会员用户累计积分
         /// </summary>
         /// <param name="model"></param>
-        public void AddIntegral(WeiXinIntegralDetailsCreateDto model)
+        private void AddIntegral(WeiXinIntegralDetailsCreateDto model)
         {
             var tbl_WeiXin_User = _weiXinUserRepository.FirstOrDefault(a => a.OpenId == model.OpenId);
             if (tbl_WeiXin_User == null)

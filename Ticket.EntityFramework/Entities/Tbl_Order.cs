@@ -13,6 +13,10 @@ namespace Ticket.EntityFramework.Entities
         [StringLength(32)]
         public string OrderNo { get; set; }
 
+        [Required]
+        [StringLength(200)]
+        public string OpenId { get; set; }
+
         public int EnterpriseId { get; set; }
 
         public int ScenicId { get; set; }

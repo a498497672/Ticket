@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using Ticket.EntityFramework.Entities;
 using Ticket.Model.Enum;
+using Ticket.Model.Order;
 using Ticket.Model.Scenic;
 using Ticket.Model.User;
 using Ticket.Model.WeiXin;
@@ -33,6 +34,12 @@ namespace Ticket.WebApi.AutoMapper
                 .ForMember(bp => bp.TicketNotice, opt => opt.MapFrom(p => p.TicketTips));
 
             CreateMap<Tbl_Ticket, TicketViewDto>();
+
+            CreateMap<Tbl_Order, OrderViewDto>()
+                 .ForMember(bp => bp.ValidityDate, opt => opt.MapFrom(p => p.ValidityDateStart.ToString("yyyy-MM-dd") + " 至 " + p.ValidityDateEnd.ToString("yyyy-MM-dd")));
+            CreateMap<Tbl_OrderDetail, OrderDetailViewDto>()
+                .ForMember(bp => bp.CreateDate, opt => opt.MapFrom(p => p.ValidityDateEnd.ToString("yyyy-MM-dd")))
+                .ForMember(bp => bp.ValidityDate, opt => opt.MapFrom(p => p.ValidityDateStart.ToString("yyyy-MM-dd") + " 至 " + p.ValidityDateEnd.ToString("yyyy-MM-dd")));
         }
     }
 }

@@ -40,12 +40,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Order\OrderDetailFacadeService.cs" />
+    <Compile Include="Order\OrderFacadeService.cs" />
     <Compile Include="Prize\BannerFacadeService.cs" />
     <Compile Include="Prize\PrizeFacadeService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scenic\ScenicFacadeService.cs" />
     <Compile Include="User\IntegralFacadeService.cs" />
     <Compile Include="User\UserFacadeService.cs" />
+    <Compile Include="ValidateCode\ValidateCodeFacadeService.cs" />
     <Compile Include="WeiXin\WxPayFacadeService.cs" />
   </ItemGroup>
   <ItemGroup>

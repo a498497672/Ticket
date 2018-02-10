@@ -111,7 +111,7 @@ namespace Ticket.Core.Service
             var tbl_WeiXinPrizeUser = PredicateBuilder.True<Tbl_WeiXinPrizeUser>();
             var tbl_WeiXinPrize = PredicateBuilder.True<Tbl_WeiXinPrize>();
             tbl_WeiXinPrizeUser = tbl_WeiXinPrizeUser.And(p => p.OpenId == openId);
-            tbl_WeiXinPrize = tbl_WeiXinPrize.And(p => p.PrizeType > (int)PrizeTypeEnum.ThanksParticipation);
+            tbl_WeiXinPrize = tbl_WeiXinPrize.And(p => p.PrizeType > (int)PrizeType.ThanksParticipation);
             var weiXinPrizeUser = _weiXinPrizeUserRepository._dbset.Where(tbl_WeiXinPrizeUser);
             var weiXinPrize = _weiXinPrizeRepository._dbset.Where(tbl_WeiXinPrize);
             var linq = (from a in weiXinPrizeUser
@@ -148,7 +148,7 @@ namespace Ticket.Core.Service
             var tbl_WeiXinPrizeUser = PredicateBuilder.True<Tbl_WeiXinPrizeUser>();
             var tbl_WeiXinPrize = PredicateBuilder.True<Tbl_WeiXinPrize>();
             tbl_WeiXinPrizeUser = tbl_WeiXinPrizeUser.And(p => p.OpenId == openId);
-            tbl_WeiXinPrize = tbl_WeiXinPrize.And(p => p.PrizeType == (int)PrizeTypeEnum.Coupon);
+            tbl_WeiXinPrize = tbl_WeiXinPrize.And(p => p.PrizeType == (int)PrizeType.Coupon);
             var startDate = DateTime.Now.Date;
             var endDate = startDate.AddDays(1);
             if (IsUse)//已使用
@@ -192,7 +192,7 @@ namespace Ticket.Core.Service
             var tbl_WeiXinPrizeUser = PredicateBuilder.True<Tbl_WeiXinPrizeUser>();
             var tbl_WeiXinPrize = PredicateBuilder.True<Tbl_WeiXinPrize>();
             tbl_WeiXinPrizeUser = tbl_WeiXinPrizeUser.And(p => p.OpenId == openId);
-            tbl_WeiXinPrize = tbl_WeiXinPrize.And(p => p.PrizeType == (int)PrizeTypeEnum.Coupon);
+            tbl_WeiXinPrize = tbl_WeiXinPrize.And(p => p.PrizeType == (int)PrizeType.Coupon);
             var startDate = DateTime.Now.Date;
             var endDate = startDate.AddDays(1);
             tbl_WeiXinPrizeUser = tbl_WeiXinPrizeUser.And(p => p.IsUse == false & p.StartDate <= startDate & p.EndDate > endDate);

@@ -5,7 +5,7 @@ namespace Ticket.Model.Enum
     /// <summary>
     /// 奖品类型, 0 谢谢参与, 1 优惠卷
     /// </summary>
-    public enum PrizeTypeEnum
+    public enum PrizeType
     {
         /// <summary>
         /// 谢谢参与

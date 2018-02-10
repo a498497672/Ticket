@@ -43,11 +43,23 @@
   <ItemGroup>
     <Compile Include="Common\SelectItemDto.cs" />
     <Compile Include="Enum\IntegralType.cs" />
+    <Compile Include="Enum\OrderDetailStatusType.cs" />
+    <Compile Include="Enum\OrderRefundType.cs" />
+    <Compile Include="Enum\OrderStatusType.cs" />
+    <Compile Include="Enum\OrderType.cs" />
     <Compile Include="Enum\PayType.cs" />
-    <Compile Include="Enum\PrizeTypeEnum.cs" />
+    <Compile Include="Enum\PrizeType.cs" />
     <Compile Include="Enum\SexType.cs" />
-    <Compile Include="Enum\TicketDataStatusEnum.cs" />
+    <Compile Include="Enum\TicketStatusType.cs" />
+    <Compile Include="Enum\ValidateCodeType.cs" />
     <Compile Include="Order\OrderCreateDto.cs" />
+    <Compile Include="Order\OrderCreateViewDto.cs" />
+    <Compile Include="Order\OrderDetailViewDto.cs" />
+    <Compile Include="Order\OrderPayAgainDto.cs" />
+    <Compile Include="Order\OrderRechargeDto.cs" />
+    <Compile Include="Order\OrderRefundDetailDto.cs" />
+    <Compile Include="Order\OrderRefundDto.cs" />
+    <Compile Include="Order\OrderViewDto.cs" />
     <Compile Include="Prize\WeiXinAvailableCouponsDto.cs" />
     <Compile Include="Prize\WeiXinPrizeConfigDTO.cs" />
     <Compile Include="Prize\WeiXinPrizeConfigInfoDTO.cs" />
@@ -63,6 +75,7 @@
     <Compile Include="User\UserAddMembershipDto.cs" />
     <Compile Include="User\UserUpdateDto.cs" />
     <Compile Include="User\UserViewDto.cs" />
+    <Compile Include="ValidateCode\ValidateCodeDto.cs" />
     <Compile Include="WeiXin\WeiXinBannerDto.cs" />
     <Compile Include="WeiXin\WeiXinBannerItemDto.cs" />
     <Compile Include="WeiXin\WeiXinBannerListDto.cs" />

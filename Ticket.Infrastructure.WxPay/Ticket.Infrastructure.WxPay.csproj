@@ -68,8 +68,11 @@
     <Compile Include="lib\WxPayApi.cs" />
     <Compile Include="PaymentGateway.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Request\PayRequest.cs" />
+    <Compile Include="Request\RefundRequest.cs" />
     <Compile Include="Response\AauthResponse.cs" />
     <Compile Include="Response\JsSDKResponse.cs" />
+    <Compile Include="Response\PayNotifyResponse.cs" />
     <Compile Include="Response\UserInfoResponse.cs" />
   </ItemGroup>
   <ItemGroup>
