@@ -23,10 +23,10 @@ namespace Ticket.Core.Service
         /// 获取积分
         /// </summary>
         /// <returns></returns>
-        public WeiXinIntegralConfigDto Get()
+        public IntegralConfigDto Get()
         {
             var list = _integralConfigRepository.GetList();
-            var integral = new WeiXinIntegralConfigDto
+            var integral = new IntegralConfigDto
             {
                 Recharge = 0,
                 Consumption = 0,
@@ -55,7 +55,7 @@ namespace Ticket.Core.Service
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public TResult Save(WeiXinIntegralConfigDto model)
+        public TResult Save(IntegralConfigDto model)
         {
             var result = new TResult();
             var list = _integralConfigRepository.GetList();
@@ -82,7 +82,7 @@ namespace Ticket.Core.Service
         /// 获取积分配置
         /// </summary>
         /// <returns></returns>
-        public List<Tbl_WeiXinIntegralConfig> GetList()
+        public List<Tbl_IntegralConfig> GetList()
         {
             var list = _integralConfigRepository.GetList();
             return list;
@@ -94,7 +94,7 @@ namespace Ticket.Core.Service
         /// </summary>
         /// <param name="model"></param>
         /// <param name="list"></param>
-        private void SaveConsumption(WeiXinIntegralConfigDto model, List<Tbl_WeiXinIntegralConfig> list)
+        private void SaveConsumption(IntegralConfigDto model, List<Tbl_IntegralConfig> list)
         {
             var consumption = list.FirstOrDefault(a => a.Type == (int)IntegralType.Consumption);
             if (consumption != null)
@@ -104,7 +104,7 @@ namespace Ticket.Core.Service
             }
             else
             {
-                _integralConfigRepository.Add(new Tbl_WeiXinIntegralConfig
+                _integralConfigRepository.Add(new Tbl_IntegralConfig
                 {
                     Integral = model.Consumption,
                     Type = (int)IntegralType.Consumption,
@@ -118,7 +118,7 @@ namespace Ticket.Core.Service
         /// </summary>
         /// <param name="model"></param>
         /// <param name="list"></param>
-        private void SaveRecharge(WeiXinIntegralConfigDto model, List<Tbl_WeiXinIntegralConfig> list)
+        private void SaveRecharge(IntegralConfigDto model, List<Tbl_IntegralConfig> list)
         {
             var recharge = list.FirstOrDefault(a => a.Type == (int)IntegralType.Recharge);
             if (recharge != null)
@@ -128,7 +128,7 @@ namespace Ticket.Core.Service
             }
             else
             {
-                _integralConfigRepository.Add(new Tbl_WeiXinIntegralConfig
+                _integralConfigRepository.Add(new Tbl_IntegralConfig
                 {
                     Integral = model.Recharge,
                     Type = (int)IntegralType.Recharge,
@@ -141,7 +141,7 @@ namespace Ticket.Core.Service
         /// </summary>
         /// <param name="model"></param>
         /// <param name="list"></param>
-        private void SaveEverydayLogin(WeiXinIntegralConfigDto model, List<Tbl_WeiXinIntegralConfig> list)
+        private void SaveEverydayLogin(IntegralConfigDto model, List<Tbl_IntegralConfig> list)
         {
             var everyday = list.FirstOrDefault(a => a.Type == (int)IntegralType.EverydayLogin);
             if (everyday != null)
@@ -151,7 +151,7 @@ namespace Ticket.Core.Service
             }
             else
             {
-                _integralConfigRepository.Add(new Tbl_WeiXinIntegralConfig
+                _integralConfigRepository.Add(new Tbl_IntegralConfig
                 {
                     Integral = model.Everyday,
                     Type = (int)IntegralType.EverydayLogin,

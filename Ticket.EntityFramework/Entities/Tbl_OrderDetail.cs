@@ -13,12 +13,6 @@ namespace Ticket.EntityFramework.Entities
         [StringLength(32)]
         public string OrderNo { get; set; }
 
-        public int EnterpriseId { get; set; }
-
-        public int ScenicId { get; set; }
-
-        public int? WindowId { get; set; }
-
         public int? SellerId { get; set; }
 
         public int? SellerType { get; set; }
@@ -102,9 +96,5 @@ namespace Ticket.EntityFramework.Entities
         public int OtaOrderDetailId { get; set; }
 
         public int OrderSource { get; set; }
-
-        public int? WeiXinPrizeUserId { get; set; }
-
-        public decimal? WeiXinPrizeUserAmount { get; set; }
     }
 }

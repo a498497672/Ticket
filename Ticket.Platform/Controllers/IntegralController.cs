@@ -21,7 +21,7 @@ namespace Ticket.Platform.Controllers
             return View(data);
         }
 
-        public ActionResult Save(WeiXinIntegralConfigDto model)
+        public ActionResult Save(IntegralConfigDto model)
         {
             var result = _integralFacadeService.Save(model);
             return Json(result, JsonRequestBehavior.AllowGet);

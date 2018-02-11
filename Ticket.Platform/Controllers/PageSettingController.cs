@@ -29,7 +29,7 @@ namespace Ticket.Platform.Controllers
             return View();
         }
 
-        public ActionResult AddBannerData(WeiXinBannerDto model)
+        public ActionResult AddBannerData(BannerDto model)
         {
             model.EnterpriseId = 1;
             model.ScenicId = 1;
@@ -44,7 +44,7 @@ namespace Ticket.Platform.Controllers
             return View(data);
         }
 
-        public ActionResult UpdateBannerData(WeiXinBannerDto model)
+        public ActionResult UpdateBannerData(BannerDto model)
         {
             var result = _bannerFacadeService.Update(model);
             return Json(result, JsonRequestBehavior.AllowGet);

@@ -22,7 +22,7 @@ namespace Ticket.Application.User
         /// </summary>
         /// <param name="openId"></param>
         /// <returns></returns>
-        public Tbl_WeiXin_User GetByOpenId(string openId)
+        public Tbl_WeiXinUser GetByOpenId(string openId)
         {
             return _weiXinUserService.GetByOpenId(openId);
         }
@@ -31,7 +31,7 @@ namespace Ticket.Application.User
         /// 修改
         /// </summary>
         /// <param name="user"></param>
-        public void Update(Tbl_WeiXin_User user)
+        public void Update(Tbl_WeiXinUser user)
         {
             _weiXinUserService.Update(user);
         }
@@ -40,7 +40,7 @@ namespace Ticket.Application.User
         /// 加入会员
         /// </summary>
         /// <param name="user"></param>
-        public void AddMembership(Tbl_WeiXin_User user)
+        public void AddMembership(Tbl_WeiXinUser user)
         {
             _weiXinUserService.AddMembership(user);
         }

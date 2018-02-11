@@ -17,10 +17,6 @@ namespace Ticket.EntityFramework.Entities
         [StringLength(200)]
         public string OpenId { get; set; }
 
-        public int EnterpriseId { get; set; }
-
-        public int ScenicId { get; set; }
-
         public int TicketSource { get; set; }
 
         public int PayType { get; set; }
@@ -97,10 +93,5 @@ namespace Ticket.EntityFramework.Entities
         public string ReceiverName { get; set; }
 
         public int OrderType { get; set; }
-
-        public int GroupWay { get; set; }
-
-        [StringLength(200)]
-        public string OTABusinessName { get; set; }
     }
 }

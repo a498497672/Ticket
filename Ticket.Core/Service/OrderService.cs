@@ -201,16 +201,12 @@ namespace Ticket.Core.Service
                 IDCard = "",
                 CreateUserId = 0,
                 OrderType = (int)OrderType.Ticket,
-                OTABusinessName = "",
-                GroupWay = 0
             };
             var ticketNames = tbl_Ticket.TicketName;
             if (ticketNames.Length > 50)
             {
                 ticketNames = ticketNames.Substring(0, 50);
             }
-            tbl_Order.EnterpriseId = 1;
-            tbl_Order.ScenicId = 1;
             tbl_Order.TicketName = ticketNames;
             tbl_Order.TotalAmount = tbl_Ticket.SalePrice * tbl_Order.BookCount;
             _orderRepository.Add(tbl_Order);
@@ -254,16 +250,12 @@ namespace Ticket.Core.Service
                 IDCard = "",
                 CreateUserId = 0,
                 OrderType = (int)OrderType.Ticket,
-                OTABusinessName = "",
-                GroupWay = 0
             };
             var ticketNames = tbl_Ticket.TicketName;
             if (ticketNames.Length > 50)
             {
                 ticketNames = ticketNames.Substring(0, 50);
             }
-            tbl_Order.EnterpriseId = 1;
-            tbl_Order.ScenicId = 1;
             tbl_Order.TicketName = ticketNames;
             tbl_Order.TotalAmount = tbl_Ticket.SalePrice * tbl_Order.BookCount;
             _orderRepository.Add(tbl_Order);
@@ -304,10 +296,6 @@ namespace Ticket.Core.Service
                 Remark = "",
                 IDCard = "",
                 CreateUserId = 0,
-                OTABusinessName = "",
-                GroupWay = 0,
-                EnterpriseId = 1,
-                ScenicId = 1
             };
             _orderRepository.Add(tbl_Order);
             return tbl_Order;

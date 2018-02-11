@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Member\MemberTypeFacadeService.cs" />
     <Compile Include="Order\OrderDetailFacadeService.cs" />
     <Compile Include="Order\OrderFacadeService.cs" />
     <Compile Include="Prize\BannerFacadeService.cs" />

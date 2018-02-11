@@ -130,7 +130,6 @@
   <ItemGroup>
     <Compile Include="AutoFac\WebApiAutofacModule.cs" />
     <Compile Include="AutoMapper\UserProfile.cs" />
-    <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IntegralController.cs" />
     <Compile Include="Controllers\MemberController.cs" />

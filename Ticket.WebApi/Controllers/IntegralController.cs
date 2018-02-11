@@ -28,7 +28,6 @@ namespace Ticket.WebApi.Controllers
             _integralFacadeService = integralFacadeService;
         }
 
-
         /// <summary>
         /// 获取积分明细
         /// </summary>
@@ -38,16 +37,16 @@ namespace Ticket.WebApi.Controllers
         /// <response code="200">成功.</response>
         /// <response code="404">数据不存在.</response>
         [Route("GetIntegralDetails")]
-        [ResponseType(typeof(TPageResult<WeiXinIntegralDetailsDto>))]
+        [ResponseType(typeof(TPageResult<IntegralDetailsDto>))]
         public IHttpActionResult GetIntegralDetails(string openId, int page, int limit)
         {
-            var list = _integralFacadeService.GetList(new WeiXinIntegralDetailsQueryDto
+            var list = _integralFacadeService.GetList(new IntegralDetailsQueryDto
             {
                 OpenId = openId,
                 Page = page,
                 Limit = limit
             });
-            var result = new TPageResult<WeiXinIntegralDetailsDto>();
+            var result = new TPageResult<IntegralDetailsDto>();
             return Ok(result.SuccessResult(list.Data, list.TotalCount));
         }
 

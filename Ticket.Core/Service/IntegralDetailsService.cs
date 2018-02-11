@@ -36,11 +36,11 @@ namespace Ticket.Core.Service
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public PagedResult<WeiXinIntegralDetailsDto> GetList(WeiXinIntegralDetailsQueryDto model)
+        public PagedResult<IntegralDetailsDto> GetList(IntegralDetailsQueryDto model)
         {
             var tbl_WeiXinIntegralDetails = _integralDetailsRepository._dbset.Where(a => a.OpenId == model.OpenId && a.Integral > 0);
             var linq = (from a in tbl_WeiXinIntegralDetails
-                        select new WeiXinIntegralDetailsDto
+                        select new IntegralDetailsDto
                         {
                             Name = a.Name,
                             Integral = a.Integral,
@@ -59,7 +59,7 @@ namespace Ticket.Core.Service
             using (TransactionScope tran = new TransactionScope())
             {
 
-                AddIntegral(new WeiXinIntegralDetailsCreateDto
+                AddIntegral(new IntegralDetailsCreateDto
                 {
                     OpenId = openId,
                     Amount = 1,
@@ -77,7 +77,7 @@ namespace Ticket.Core.Service
         /// <param name="tbl_Order"></param>
         public void AddForBalanceConsumption(Tbl_Order tbl_Order)
         {
-            AddIntegral(new WeiXinIntegralDetailsCreateDto
+            AddIntegral(new IntegralDetailsCreateDto
             {
                 OpenId = tbl_Order.OpenId,
                 Amount = tbl_Order.TotalAmount,
@@ -93,7 +93,7 @@ namespace Ticket.Core.Service
         /// <param name="tbl_Order"></param>
         public void AddForWechatConsumption(Tbl_Order tbl_Order)
         {
-            AddIntegral(new WeiXinIntegralDetailsCreateDto
+            AddIntegral(new IntegralDetailsCreateDto
             {
                 OpenId = tbl_Order.OpenId,
                 Amount = tbl_Order.TotalAmount,
@@ -109,7 +109,7 @@ namespace Ticket.Core.Service
         /// <param name="tbl_Order"></param>
         public void AddForRecharge(Tbl_Order tbl_Order)
         {
-            AddIntegral(new WeiXinIntegralDetailsCreateDto
+            AddIntegral(new IntegralDetailsCreateDto
             {
                 OpenId = tbl_Order.OpenId,
                 Amount = tbl_Order.TotalAmount,
@@ -124,7 +124,7 @@ namespace Ticket.Core.Service
         /// 添加积分明细和会员用户累计积分
         /// </summary>
         /// <param name="model"></param>
-        private void AddIntegral(WeiXinIntegralDetailsCreateDto model)
+        private void AddIntegral(IntegralDetailsCreateDto model)
         {
             var tbl_WeiXin_User = _weiXinUserRepository.FirstOrDefault(a => a.OpenId == model.OpenId);
             if (tbl_WeiXin_User == null)
@@ -159,7 +159,7 @@ namespace Ticket.Core.Service
                 tbl_WeiXin_User.MemberTypeId = GetMemberTypeId((int)tbl_WeiXin_User.MemberPoint);
                 _weiXinUserRepository.Update(tbl_WeiXin_User);
             }
-            var createEntity = new Tbl_WeiXinIntegralDetails
+            var createEntity = new Tbl_IntegralDetails
             {
                 Name = model.Name,
                 OpenId = model.OpenId,
@@ -174,12 +174,12 @@ namespace Ticket.Core.Service
 
         public int GetMemberTypeId(int point)
         {
-            var tbl_Member_Type = _memberTypeRepository._dbset.Where(a => a.RequiredPoint <= point).OrderByDescending(a => a.RequiredPoint).FirstOrDefault();
-            if (tbl_Member_Type == null)
+            var tbl_MemberType = _memberTypeRepository._dbset.Where(a => a.RequiredPoint <= point).OrderByDescending(a => a.RequiredPoint).FirstOrDefault();
+            if (tbl_MemberType == null)
             {
                 return 0;
             }
-            return tbl_Member_Type.MemberTypeId;
+            return tbl_MemberType.Id;
         }
     }
 }

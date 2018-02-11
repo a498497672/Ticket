@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using Ticket.Core.Repository;
-using Ticket.EntityFramework;
 using Ticket.EntityFramework.Entities;
 using Ticket.Model.Enum;
-using Ticket.Model.Order;
 using Ticket.Utility.Exceptions;
 
 namespace Ticket.Core.Service
@@ -49,10 +46,7 @@ namespace Ticket.Core.Service
             {
                 Number = Guid.NewGuid(),
                 OrderNo = tbl_Order.OrderNo,
-                EnterpriseId = 1,
-                ScenicId = 1,
                 OrderType = tbl_Order.OrderType,
-                WindowId = 0,
                 SellerId = 0,
                 SellerType = 1,
                 OtaOrderDetailId = 0,
@@ -100,10 +94,7 @@ namespace Ticket.Core.Service
             {
                 Number = Guid.NewGuid(),
                 OrderNo = tbl_Order.OrderNo,
-                EnterpriseId = 1,
-                ScenicId = 1,
                 OrderType = tbl_Order.OrderType,
-                WindowId = 0,
                 SellerId = 0,
                 SellerType = 1,
                 OtaOrderDetailId = 0,
@@ -147,10 +138,7 @@ namespace Ticket.Core.Service
             {
                 Number = Guid.NewGuid(),
                 OrderNo = tbl_Order.OrderNo,
-                EnterpriseId = 1,
-                ScenicId = 1,
                 OrderType = tbl_Order.OrderType,
-                WindowId = 0,
                 SellerId = 0,
                 SellerType = 1,
                 OtaOrderDetailId = 0,

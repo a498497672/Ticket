@@ -7,10 +7,6 @@ namespace Ticket.EntityFramework.Entities
     {
         public int Id { get; set; }
 
-        public int EnterpriseId { get; set; }
-
-        public int ScenicId { get; set; }
-
         [Required]
         [StringLength(50)]
         public string OpenId { get; set; }

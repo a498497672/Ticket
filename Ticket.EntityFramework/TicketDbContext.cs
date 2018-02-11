@@ -10,39 +10,39 @@ namespace Ticket.EntityFramework
         {
         }
 
-        public virtual DbSet<Tbl_Member_Type> Tbl_Member_Type { get; set; }
+        public virtual DbSet<Tbl_MemberType> Tbl_MemberType { get; set; }
         public virtual DbSet<Tbl_Msg> Tbl_Msg { get; set; }
         public virtual DbSet<Tbl_Order> Tbl_Order { get; set; }
         public virtual DbSet<Tbl_OrderDetail> Tbl_OrderDetail { get; set; }
         public virtual DbSet<Tbl_Scenic> Tbl_Scenic { get; set; }
         public virtual DbSet<Tbl_SoundWall> Tbl_SoundWall { get; set; }
         public virtual DbSet<Tbl_User> Tbl_User { get; set; }
-        public virtual DbSet<Tbl_WeiXin_User> Tbl_WeiXin_User { get; set; }
-        public virtual DbSet<Tbl_WeiXinBanner> Tbl_WeiXinBanner { get; set; }
-        public virtual DbSet<Tbl_WeiXinIntegralConfig> Tbl_WeiXinIntegralConfig { get; set; }
-        public virtual DbSet<Tbl_WeiXinIntegralDetails> Tbl_WeiXinIntegralDetails { get; set; }
-        public virtual DbSet<Tbl_WeiXinPrize> Tbl_WeiXinPrize { get; set; }
-        public virtual DbSet<Tbl_WeiXinPrizeConfig> Tbl_WeiXinPrizeConfig { get; set; }
-        public virtual DbSet<Tbl_WeiXinPrizeUser> Tbl_WeiXinPrizeUser { get; set; }
+        public virtual DbSet<Tbl_WeiXinUser> Tbl_WeiXinUser { get; set; }
+        public virtual DbSet<Tbl_Banner> Tbl_Banner { get; set; }
+        public virtual DbSet<Tbl_IntegralConfig> Tbl_IntegralConfig { get; set; }
+        public virtual DbSet<Tbl_IntegralDetails> Tbl_IntegralDetails { get; set; }
+        public virtual DbSet<Tbl_Prize> Tbl_Prize { get; set; }
+        public virtual DbSet<Tbl_PrizeConfig> Tbl_PrizeConfig { get; set; }
+        public virtual DbSet<Tbl_PrizeUser> Tbl_PrizeUser { get; set; }
         public virtual DbSet<Tbl_Ticket> Tbl_Ticket { get; set; }
         public virtual DbSet<Tbl_ValidateCode> Tbl_ValidateCode { get; set; }
         public virtual DbSet<Tbl_OrderRefundDetail> Tbl_OrderRefundDetail { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Tbl_Member_Type>()
-                .Property(e => e.MemberTypeName)
+            modelBuilder.Entity<Tbl_MemberType>()
+                .Property(e => e.Name)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<Tbl_Member_Type>()
+            modelBuilder.Entity<Tbl_MemberType>()
                 .Property(e => e.ImgUrl)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<Tbl_Member_Type>()
+            modelBuilder.Entity<Tbl_MemberType>()
                 .Property(e => e.LineType)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<Tbl_Member_Type>()
+            modelBuilder.Entity<Tbl_MemberType>()
                 .Property(e => e.Discount)
                 .HasPrecision(8, 2);
 
@@ -66,10 +66,6 @@ namespace Ticket.EntityFramework
                 .Property(e => e.SettlementPrice)
                 .HasPrecision(9, 2);
 
-            modelBuilder.Entity<Tbl_OrderDetail>()
-                .Property(e => e.WeiXinPrizeUserAmount)
-                .HasPrecision(9, 2);
-
             modelBuilder.Entity<Tbl_SoundWall>()
                 .Property(e => e.OpenId)
                 .IsUnicode(false);
@@ -82,19 +78,19 @@ namespace Ticket.EntityFramework
                 .Property(e => e.VoiceFile)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<Tbl_WeiXin_User>()
+            modelBuilder.Entity<Tbl_WeiXinUser>()
                 .Property(e => e.HeaderImage)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<Tbl_WeiXin_User>()
+            modelBuilder.Entity<Tbl_WeiXinUser>()
                 .Property(e => e.CardNo)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<Tbl_WeiXin_User>()
+            modelBuilder.Entity<Tbl_WeiXinUser>()
                 .Property(e => e.SaleMoney)
                 .HasPrecision(8, 2);
 
-            modelBuilder.Entity<Tbl_WeiXinIntegralDetails>()
+            modelBuilder.Entity<Tbl_IntegralDetails>()
                 .Property(e => e.TradeMoney)
                 .HasPrecision(8, 2);
 

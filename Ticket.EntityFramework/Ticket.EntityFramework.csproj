@@ -64,22 +64,30 @@
     <Compile Include="Migrations\201802070342263_create20180207.Designer.cs">
       <DependentUpon>201802070342263_create20180207.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201802110801308_create20180211.cs" />
+    <Compile Include="Migrations\201802110801308_create20180211.Designer.cs">
+      <DependentUpon>201802110801308_create20180211.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802110909134_create20180212.cs" />
+    <Compile Include="Migrations\201802110909134_create20180212.Designer.cs">
+      <DependentUpon>201802110909134_create20180212.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Entities\Tbl_Member_Type.cs" />
+    <Compile Include="Entities\Tbl_MemberType.cs" />
     <Compile Include="Entities\Tbl_Msg.cs" />
     <Compile Include="Entities\Tbl_Order.cs" />
     <Compile Include="Entities\Tbl_OrderDetail.cs" />
     <Compile Include="Entities\Tbl_Scenic.cs" />
     <Compile Include="Entities\Tbl_SoundWall.cs" />
     <Compile Include="Entities\Tbl_User.cs" />
-    <Compile Include="Entities\Tbl_WeiXinBanner.cs" />
-    <Compile Include="Entities\Tbl_WeiXinIntegralConfig.cs" />
-    <Compile Include="Entities\Tbl_WeiXinIntegralDetails.cs" />
-    <Compile Include="Entities\Tbl_WeiXinPrize.cs" />
-    <Compile Include="Entities\Tbl_WeiXinPrizeConfig.cs" />
-    <Compile Include="Entities\Tbl_WeiXinPrizeUser.cs" />
-    <Compile Include="Entities\Tbl_WeiXin_User.cs" />
+    <Compile Include="Entities\Tbl_Banner.cs" />
+    <Compile Include="Entities\Tbl_IntegralConfig.cs" />
+    <Compile Include="Entities\Tbl_IntegralDetails.cs" />
+    <Compile Include="Entities\Tbl_Prize.cs" />
+    <Compile Include="Entities\Tbl_PrizeConfig.cs" />
+    <Compile Include="Entities\Tbl_PrizeUser.cs" />
+    <Compile Include="Entities\Tbl_WeiXinUser.cs" />
     <Compile Include="RepositoryBase.cs" />
     <Compile Include="TicketDbContext.cs" />
   </ItemGroup>
@@ -93,6 +101,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201802070342263_create20180207.resx">
       <DependentUpon>201802070342263_create20180207.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802110801308_create20180211.resx">
+      <DependentUpon>201802110801308_create20180211.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802110909134_create20180212.resx">
+      <DependentUpon>201802110909134_create20180212.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

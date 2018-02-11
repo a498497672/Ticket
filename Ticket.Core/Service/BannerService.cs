@@ -24,14 +24,14 @@ namespace Ticket.Core.Service
         /// </summary>
         /// <param name="scenicId">景区id</param>
         /// <returns></returns>
-        public TPageResult<WeiXinBannerListDto> GetList()
+        public TPageResult<BannerListDto> GetList()
         {
-            var result = new TPageResult<WeiXinBannerListDto>();
+            var result = new TPageResult<BannerListDto>();
             var tbl_WeiXinPrizes = _bannerRepository.GetList().OrderBy(a => a.Order).ToList();
-            List<WeiXinBannerListDto> list = new List<WeiXinBannerListDto>();
+            List<BannerListDto> list = new List<BannerListDto>();
             foreach (var row in tbl_WeiXinPrizes)
             {
-                list.Add(new WeiXinBannerListDto
+                list.Add(new BannerListDto
                 {
                     Id = row.Id,
                     Title = row.Title,
@@ -54,15 +54,15 @@ namespace Ticket.Core.Service
         /// </summary>
         /// <param name="scenicId">景区id</param>
         /// <returns></returns>
-        public TResult<List<WeiXinBannerItemDto>> GetItems()
+        public List<BannerItemDto> GetItems()
         {
-            var result = new TResult<List<WeiXinBannerItemDto>>();
+            var result = new TResult<List<BannerItemDto>>();
             var tbl_WeiXinPrizes = _bannerRepository.GetList(a => a.IsEnable == true).OrderBy(a => a.Order).ToList();
-            List<WeiXinBannerItemDto> list = new List<WeiXinBannerItemDto>();
+            List<BannerItemDto> list = new List<BannerItemDto>();
             string domainAPI = ConfigurationManager.AppSettings["UploadImageDomain"];//图片域名或IP地址
             foreach (var row in tbl_WeiXinPrizes)
             {
-                list.Add(new WeiXinBannerItemDto
+                list.Add(new BannerItemDto
                 {
                     Id = row.Id,
                     Title = row.Title,
@@ -71,18 +71,18 @@ namespace Ticket.Core.Service
                     ImgPathUrl = domainAPI.TrimEnd('/') + "/" + row.ImgPath,
                 });
             }
-            return result.SuccessResult(list);
+            return list;
         }
 
-        public WeiXinBannerDto Get(int id)
+        public BannerDto Get(int id)
         {
             var tbl_WeiXinBanner = _bannerRepository.Get(id);
             if (tbl_WeiXinBanner == null)
             {
-                return new WeiXinBannerDto();
+                return new BannerDto();
             }
             string domainAPI = ConfigurationManager.AppSettings["UploadImageDomain"];//图片域名或IP地址
-            var dto = new WeiXinBannerDto
+            var dto = new BannerDto
             {
                 Id = tbl_WeiXinBanner.Id,
                 ImgPath = tbl_WeiXinBanner.ImgPath,
@@ -99,21 +99,19 @@ namespace Ticket.Core.Service
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public TResult Add(WeiXinBannerDto model)
+        public TResult Add(BannerDto model)
         {
             TResult result = new TResult();
             try
             {
 
                 var tbl_WeiXinBanner = _bannerRepository.GetOrderByDescendingOrFirst();
-                _bannerRepository.Add(new Tbl_WeiXinBanner
+                _bannerRepository.Add(new Tbl_Banner
                 {
-                    EnterpriseId = model.EnterpriseId,
                     ImgPath = model.ImgPath,
                     Url = model.Url,
                     Order = tbl_WeiXinBanner == null ? 1 : tbl_WeiXinBanner.Order + 1,
                     Title = model.Title,
-                    ScenicId = model.ScenicId,
                     IsEnable = model.IsEnable,
                     CreateTime = DateTime.Now,
                     CreateUserId = 0
@@ -131,7 +129,7 @@ namespace Ticket.Core.Service
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public TResult Update(WeiXinBannerDto model)
+        public TResult Update(BannerDto model)
         {
             TResult result = new TResult();
             try
@@ -169,7 +167,7 @@ namespace Ticket.Core.Service
                 {
                     return result.FailureResult();
                 }
-                var banner = _bannerRepository.GetOrderByDescendingOrFirst(a => a.ScenicId == nowBanner.ScenicId & a.Order < nowBanner.Order);
+                var banner = _bannerRepository.GetOrderByDescendingOrFirst(a => a.Order < nowBanner.Order);
                 if (banner == null)
                 {
                     return result.FailureResult("当前已经是第一位");
@@ -207,7 +205,7 @@ namespace Ticket.Core.Service
                 {
                     return result.FailureResult();
                 }
-                var banner = _bannerRepository.GetOrderByOrFirst(a => a.ScenicId == nowBanner.ScenicId & a.Order > nowBanner.Order);
+                var banner = _bannerRepository.GetOrderByOrFirst(a => a.Order > nowBanner.Order);
                 if (banner == null)
                 {
                     return result.FailureResult("当前已经是最后一位");

@@ -114,7 +114,7 @@ namespace Ticket.Core.Service
             {
                 throw new SimplePromptException("获取用户信息失败");
             }
-            _weiXinUserService.Add(new Tbl_WeiXin_User
+            _weiXinUserService.Add(new Tbl_WeiXinUser
             {
                 Sex = Convert.ToInt32(userInfo.Sex),
                 City = userInfo.City,

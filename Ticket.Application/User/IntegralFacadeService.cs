@@ -30,7 +30,7 @@ namespace Ticket.Application.User
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public PagedResult<WeiXinIntegralDetailsDto> GetList(WeiXinIntegralDetailsQueryDto model)
+        public PagedResult<IntegralDetailsDto> GetList(IntegralDetailsQueryDto model)
         {
             return _integralDetailsService.GetList(model);
         }
@@ -39,7 +39,7 @@ namespace Ticket.Application.User
         /// 获取积分配置
         /// </summary>
         /// <returns></returns>
-        public List<Tbl_WeiXinIntegralConfig> GetIntegralConfigList()
+        public List<Tbl_IntegralConfig> GetIntegralConfigList()
         {
             return _integralConfigService.GetList();
         }
@@ -49,7 +49,7 @@ namespace Ticket.Application.User
         /// 获取积分
         /// </summary>
         /// <returns></returns>
-        public WeiXinIntegralConfigDto Get()
+        public IntegralConfigDto Get()
         {
             return _integralConfigService.Get();
         }
@@ -59,7 +59,7 @@ namespace Ticket.Application.User
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public TResult Save(WeiXinIntegralConfigDto model)
+        public TResult Save(IntegralConfigDto model)
         {
             return _integralConfigService.Save(model);
         }

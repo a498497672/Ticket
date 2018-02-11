@@ -50,7 +50,7 @@ namespace Ticket.Platform.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public ActionResult AddPrizeData(WeiXinPrizeDTO model)
+        public ActionResult AddPrizeData(PrizeDto model)
         {
             model.EnterpriseId = 1;
             model.ScenicId = 1;
@@ -64,7 +64,7 @@ namespace Ticket.Platform.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public ActionResult UpdatePrizeConfigData(WeiXinPrizeConfigDTO model)
+        public ActionResult UpdatePrizeConfigData(PrizeConfigDto model)
         {
             model.EnterpriseId = 1;
             model.ScenicId = 1;
@@ -79,7 +79,7 @@ namespace Ticket.Platform.Controllers
             return View(data);
         }
 
-        public ActionResult UpdatePrizeData(WeiXinPrizeDTO model)
+        public ActionResult UpdatePrizeData(PrizeDto model)
         {
             var result = _weiXinPrizeFacadeService.UpdatePrize(model);
             return Json(result, JsonRequestBehavior.AllowGet);
@@ -96,7 +96,7 @@ namespace Ticket.Platform.Controllers
             return View();
         }
 
-        public ActionResult WinningCheckListData(WeiXinPrizeUserQureyDTO model)
+        public ActionResult WinningCheckListData(PrizeUserQureyDto model)
         {
             var result = _weiXinPrizeFacadeService.GetPrizeUserList(model);
             return Json(result, JsonRequestBehavior.AllowGet);

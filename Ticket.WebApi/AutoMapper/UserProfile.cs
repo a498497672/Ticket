@@ -23,13 +23,13 @@ namespace Ticket.WebApi.AutoMapper
         /// <exception cref="System.NotImplementedException"></exception>
         protected override void Configure()
         {
-            CreateMap<Tbl_WeiXin_User, UserViewDto>()
+            CreateMap<Tbl_WeiXinUser, UserViewDto>()
                 .ForMember(bp => bp.HeadImgUrl, opt => opt.MapFrom(p => p.HeaderImage))
                 .ForMember(bp => bp.Birthday, opt => opt.MapFrom(p => p.Birthday.HasValue ? p.Birthday.Value.ToString("yyyy-MM-dd") : ""));
-            CreateMap<UserUpdateDto, Tbl_WeiXin_User>()
+            CreateMap<UserUpdateDto, Tbl_WeiXinUser>()
                 .ForMember(bp => bp.HeaderImage, opt => opt.MapFrom(p => p.HeadImgUrl));
-            CreateMap<UserAddMembershipDto, Tbl_WeiXin_User>();
-            CreateMap<Tbl_WeiXinIntegralConfig, IntegralConfigViewDto>();
+            CreateMap<Model.User.UserAddMembershipDto, Tbl_WeiXinUser>();
+            CreateMap<Tbl_IntegralConfig, IntegralConfigViewDto>();
             CreateMap<Tbl_Scenic, ScenicViewDto>()
                 .ForMember(bp => bp.TicketNotice, opt => opt.MapFrom(p => p.TicketTips));
 

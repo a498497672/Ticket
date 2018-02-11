@@ -19,7 +19,7 @@ namespace Ticket.Application.Prize
         /// </summary>
         /// <param name="scenicId">景区id</param>
         /// <returns></returns>
-        public TPageResult<WeiXinBannerListDto> GetList()
+        public TPageResult<BannerListDto> GetList()
         {
             return _bannerService.GetList();
         }
@@ -29,12 +29,12 @@ namespace Ticket.Application.Prize
         /// </summary>
         /// <param name="scenicId">景区id</param>
         /// <returns></returns>
-        public TResult<List<WeiXinBannerItemDto>> GetItems()
+        public List<BannerItemDto> GetItems()
         {
             return _bannerService.GetItems();
         }
 
-        public WeiXinBannerDto Get(int id)
+        public BannerDto Get(int id)
         {
             return _bannerService.Get(id);
         }
@@ -44,7 +44,7 @@ namespace Ticket.Application.Prize
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public TResult Add(WeiXinBannerDto model)
+        public TResult Add(BannerDto model)
         {
             return _bannerService.Add(model);
         }
@@ -54,7 +54,7 @@ namespace Ticket.Application.Prize
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public TResult Update(WeiXinBannerDto model)
+        public TResult Update(BannerDto model)
         {
             return _bannerService.Update(model);
         }

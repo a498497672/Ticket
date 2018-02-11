@@ -3,7 +3,7 @@ using Ticket.EntityFramework.Entities;
 
 namespace Ticket.Core.Repository
 {
-    public class PrizeConfigRepository : RepositoryBase<Tbl_WeiXinPrizeConfig>
+    public class PrizeConfigRepository : RepositoryBase<Tbl_PrizeConfig>
     {
         public PrizeConfigRepository(TicketDbContext dbContext) : base(dbContext)
         {

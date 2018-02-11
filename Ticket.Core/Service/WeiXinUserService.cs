@@ -27,7 +27,7 @@ namespace Ticket.Core.Service
         /// </summary>
         /// <param name="openId"></param>
         /// <returns></returns>
-        public Tbl_WeiXin_User GetByOpenId(string openId)
+        public Tbl_WeiXinUser GetByOpenId(string openId)
         {
             var weiXin_User = _weiXinUserRepository.FirstOrDefault(a => a.OpenId == openId);
             if (weiXin_User == null)
@@ -42,7 +42,7 @@ namespace Ticket.Core.Service
         /// </summary>
         /// <param name="openId"></param>
         /// <returns></returns>
-        public Tbl_WeiXin_User CheckIsExist(string openId)
+        public Tbl_WeiXinUser CheckIsExist(string openId)
         {
             var weiXin_User = _weiXinUserRepository.FirstOrDefault(a => a.OpenId == openId);
             if (weiXin_User == null)
@@ -56,7 +56,7 @@ namespace Ticket.Core.Service
         /// 添加微信用户
         /// </summary>
         /// <param name="user"></param>
-        public void Add(Tbl_WeiXin_User user)
+        public void Add(Tbl_WeiXinUser user)
         {
             user.Balance = 0;
             user.CardNo = "";
@@ -74,7 +74,7 @@ namespace Ticket.Core.Service
         /// 修改
         /// </summary>
         /// <param name="user"></param>
-        public void Update(Tbl_WeiXin_User user)
+        public void Update(Tbl_WeiXinUser user)
         {
             _weiXinUserRepository.Update(user);
         }
@@ -83,7 +83,7 @@ namespace Ticket.Core.Service
         /// 加入会员
         /// </summary>
         /// <param name="user"></param>
-        public void AddMembership(Tbl_WeiXin_User user)
+        public void AddMembership(Tbl_WeiXinUser user)
         {
             if (user.IsMemberUser)
             {

@@ -27,7 +27,7 @@ namespace Ticket.Core.Service
             _weiXinPrizeRepository = weiXinPrizeRepository;
         }
 
-        public int GetWeiXinPrizeUserCount(string openId, Tbl_WeiXinPrizeConfig tbl_WeiXinPrizeConfig)
+        public int GetWeiXinPrizeUserCount(string openId, Tbl_PrizeConfig tbl_WeiXinPrizeConfig)
         {
             var dateNow = DateTime.Now;
             DateTime endDate = tbl_WeiXinPrizeConfig.EndDate.AddDays(1);
@@ -44,12 +44,12 @@ namespace Ticket.Core.Service
         /// </summary>
         /// <param name="scenicId">景区id</param>
         /// <returns></returns>
-        public TPageResult<WeiXinPrizeUserViewDTO> GetPrizeUserList(WeiXinPrizeUserQureyDTO model)
+        public TPageResult<PrizeUserViewDto> GetPrizeUserList(PrizeUserQureyDto model)
         {
-            var result = new TPageResult<WeiXinPrizeUserViewDTO>();
-            var tbl_WeiXinPrizeUser = PredicateBuilder.True<Tbl_WeiXinPrizeUser>();
-            var tbl_WeiXinPrize = PredicateBuilder.True<Tbl_WeiXinPrize>();
-            var tbl_WeiXin_User = PredicateBuilder.True<Tbl_WeiXin_User>();
+            var result = new TPageResult<PrizeUserViewDto>();
+            var tbl_WeiXinPrizeUser = PredicateBuilder.True<Tbl_PrizeUser>();
+            var tbl_WeiXinPrize = PredicateBuilder.True<Tbl_Prize>();
+            var tbl_WeiXin_User = PredicateBuilder.True<Tbl_WeiXinUser>();
             //tbl_WeiXinPrizeUser = tbl_WeiXinPrizeUser.And(p => p.ScenicId == model.ScenicId);
             if (!string.IsNullOrEmpty(model.Number))
             {
@@ -78,7 +78,7 @@ namespace Ticket.Core.Service
             var linq = (from a in weiXinPrizeUser
                         join b in weiXinPrize on a.PrizeId equals b.Id
                         join c in weiXin_User on a.OpenId equals c.OpenId
-                        select new WeiXinPrizeUserViewDTO
+                        select new PrizeUserViewDto
                         {
                             OpenId = a.OpenId,
                             IsUse = a.IsUse,
@@ -99,24 +99,23 @@ namespace Ticket.Core.Service
         /// <summary>
         /// 获取奖品列表
         /// </summary>
-        /// <param name="scenicId">景区id</param>
+        /// <param name="openId"></param>
         /// <returns></returns>
-        public TResult<List<WeiXinPrizeUserListDTO>> GetPrizeUserList(string openId)
+        public List<PrizeUserListDto> GetPrizeUserList(string openId)
         {
-            var result = new TResult<List<WeiXinPrizeUserListDTO>>();
             if (string.IsNullOrEmpty(openId))
             {
-                result.FailureResult(null, "没有找到用户信息");
+                return null;
             }
-            var tbl_WeiXinPrizeUser = PredicateBuilder.True<Tbl_WeiXinPrizeUser>();
-            var tbl_WeiXinPrize = PredicateBuilder.True<Tbl_WeiXinPrize>();
+            var tbl_WeiXinPrizeUser = PredicateBuilder.True<Tbl_PrizeUser>();
+            var tbl_WeiXinPrize = PredicateBuilder.True<Tbl_Prize>();
             tbl_WeiXinPrizeUser = tbl_WeiXinPrizeUser.And(p => p.OpenId == openId);
             tbl_WeiXinPrize = tbl_WeiXinPrize.And(p => p.PrizeType > (int)PrizeType.ThanksParticipation);
             var weiXinPrizeUser = _weiXinPrizeUserRepository._dbset.Where(tbl_WeiXinPrizeUser);
             var weiXinPrize = _weiXinPrizeRepository._dbset.Where(tbl_WeiXinPrize);
             var linq = (from a in weiXinPrizeUser
                         join b in weiXinPrize on a.PrizeId equals b.Id
-                        select new WeiXinPrizeUserListDTO
+                        select new PrizeUserListDto
                         {
                             IsUse = a.IsUse,
                             Number = a.Number,
@@ -128,25 +127,23 @@ namespace Ticket.Core.Service
                             EndDate = a.EndDate
                         }).OrderByDescending(c => c.WinningDate);
             var list = linq.ToList();
-            return result.SuccessResult(list);
+            return list;
         }
 
         /// <summary>
         /// 获取我的优惠卷
         /// </summary>
-        /// <param name="scenicId"></param>
         /// <param name="openId"></param>
         /// <param name="IsUse">是否使用（过期的包含在已使用中）</param>
         /// <returns></returns>
-        public TResult<List<WeiXinPrizeUserListDTO>> GetPrizeUserForCouponList(string openId, bool IsUse)
+        public List<PrizeUserListDto> GetPrizeUserForCouponList(string openId, bool IsUse)
         {
-            var result = new TResult<List<WeiXinPrizeUserListDTO>>();
             if (string.IsNullOrEmpty(openId))
             {
-                result.FailureResult(null, "没有找到用户信息");
+                return null;
             }
-            var tbl_WeiXinPrizeUser = PredicateBuilder.True<Tbl_WeiXinPrizeUser>();
-            var tbl_WeiXinPrize = PredicateBuilder.True<Tbl_WeiXinPrize>();
+            var tbl_WeiXinPrizeUser = PredicateBuilder.True<Tbl_PrizeUser>();
+            var tbl_WeiXinPrize = PredicateBuilder.True<Tbl_Prize>();
             tbl_WeiXinPrizeUser = tbl_WeiXinPrizeUser.And(p => p.OpenId == openId);
             tbl_WeiXinPrize = tbl_WeiXinPrize.And(p => p.PrizeType == (int)PrizeType.Coupon);
             var startDate = DateTime.Now.Date;
@@ -163,7 +160,7 @@ namespace Ticket.Core.Service
             var weiXinPrize = _weiXinPrizeRepository._dbset.Where(tbl_WeiXinPrize);
             var linq = (from a in weiXinPrizeUser
                         join b in weiXinPrize on a.PrizeId equals b.Id
-                        select new WeiXinPrizeUserListDTO
+                        select new PrizeUserListDto
                         {
                             IsUse = a.IsUse,
                             Number = a.Number,
@@ -176,21 +173,23 @@ namespace Ticket.Core.Service
                             EndDate = a.EndDate
                         }).OrderByDescending(c => c.WinningDate);
             var list = linq.ToList();
-            return result.SuccessResult(list);
+            return list;
         }
 
         /// <summary>
         /// 获取可以优惠卷
         /// </summary>
-        /// <param name="scenicId"></param>
         /// <param name="openId"></param>
         /// <param name="amount">订单金额</param>
         /// <returns></returns>
-        public TResult<List<WeiXinAvailableCouponsDto>> GetAvailableCouponsList(string openId, decimal amount)
+        public List<AvailableCouponsDto> GetAvailableCouponsList(string openId, decimal amount)
         {
-            var result = new TResult<List<WeiXinAvailableCouponsDto>>();
-            var tbl_WeiXinPrizeUser = PredicateBuilder.True<Tbl_WeiXinPrizeUser>();
-            var tbl_WeiXinPrize = PredicateBuilder.True<Tbl_WeiXinPrize>();
+            if (string.IsNullOrEmpty(openId))
+            {
+                return null;
+            }
+            var tbl_WeiXinPrizeUser = PredicateBuilder.True<Tbl_PrizeUser>();
+            var tbl_WeiXinPrize = PredicateBuilder.True<Tbl_Prize>();
             tbl_WeiXinPrizeUser = tbl_WeiXinPrizeUser.And(p => p.OpenId == openId);
             tbl_WeiXinPrize = tbl_WeiXinPrize.And(p => p.PrizeType == (int)PrizeType.Coupon);
             var startDate = DateTime.Now.Date;
@@ -200,7 +199,7 @@ namespace Ticket.Core.Service
             var weiXinPrize = _weiXinPrizeRepository._dbset.Where(tbl_WeiXinPrize);
             var linq = (from a in weiXinPrizeUser
                         join b in weiXinPrize on a.PrizeId equals b.Id
-                        select new WeiXinAvailableCouponsDto
+                        select new AvailableCouponsDto
                         {
                             Id = a.Id,
                             IsUse = b.MinUseAmount <= amount ? true : false,
@@ -211,7 +210,49 @@ namespace Ticket.Core.Service
                             EndDate = a.EndDate
                         }).OrderByDescending(c => new { c.IsUse, c.Money });
             var list = linq.ToList();
-            return result.SuccessResult(list);
+            return list;
+        }
+
+        /// <summary>
+        /// 检查抽奖次数是否用完
+        /// </summary>
+        /// <param name="tbl_PrizeConfig">抽奖配置</param>
+        /// <param name="openId">微信用户唯一标识</param>
+        public void CheckDrawFrequency(Tbl_PrizeConfig tbl_PrizeConfig, string openId)
+        {
+            var dateNow = DateTime.Now;
+            DateTime endDate = tbl_PrizeConfig.EndDate.AddDays(1);
+            var tbl_WeiXinPrizeUserCount = _weiXinPrizeUserRepository.Count(p =>
+                p.OpenId == openId &
+                p.CreateTime >= tbl_PrizeConfig.StartDate.Date &
+                p.CreateTime < endDate.Date &
+                p.WinningDate == dateNow.Date);
+            if (tbl_WeiXinPrizeUserCount >= tbl_PrizeConfig.Frequency)
+            {
+                throw new SimplePromptException("您的抽奖次数已用完");
+            }
+        }
+
+        /// <summary>
+        /// 添加中奖信息
+        /// </summary>
+        /// <param name="openId"></param>
+        /// <param name="tbl_WeiXinPrize"></param>
+        public void Add(Tbl_Prize tbl_WeiXinPrize, string openId)
+        {
+            var Tbl_WeiXinPrizeUser = new Tbl_PrizeUser
+            {
+                OpenId = openId,
+                PrizeId = tbl_WeiXinPrize.Id,
+                IsUse = false,
+                Number = OrderHelper.GenerateOrderNo(),
+                StartDate = tbl_WeiXinPrize.StartDate,
+                EndDate = tbl_WeiXinPrize.EndDate,
+                CreateTime = DateTime.Now,
+                WinningDate = DateTime.Now,
+                CreateUserId = 0
+            };
+            _weiXinPrizeUserRepository.Add(Tbl_WeiXinPrizeUser);
         }
     }
 }

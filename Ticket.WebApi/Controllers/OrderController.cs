@@ -1,9 +1,5 @@
 ﻿using AutoMapper;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using Ticket.Application.Order;
 using Ticket.Model.Order;
@@ -50,7 +46,6 @@ namespace Ticket.WebApi.Controllers
         /// <summary>
         /// 获取订单详情  -- 门票
         /// </summary>
-        /// <param name="openId">微信用户唯一标识</param>
         /// <param name="orderNo">订单号</param>
         /// <returns></returns>
         [Route("Detail")]

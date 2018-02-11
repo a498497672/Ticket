@@ -1,0 +1,121 @@
+﻿
+@{
+    ViewBag.Title = "会员类型";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<div class="buyTicketTitle">
+    <div class="buyTicketTitleAll">
+        <a href=""></a><span>会员类型</span>
+    </div>
+</div>
+<div class="layui-main-common">
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <a class="layui-btn layui-btn-normal" id="btnAdd"><i class="layui-icon">&#xe608;</i>新增</a>
+        </div>
+    </div>
+    <table class="layui-hide" id="LAY_table_list" lay-filter="tableList"></table>
+</div>
+<script type="text/html" id="barAction">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-xs" lay-event="delete">删除</a>
+</script>
+<script>
+    layui.use(['element', 'form', 'table', 'laydate'], function () {
+        var form = layui.form, table = layui.table, element = layui.element, laydate = layui.laydate;
+        //方法级渲染
+        table.render({
+            elem: '#LAY_table_list'
+            , url: '/MemberType/ListData/'
+            , cols: [[
+                { field: 'Name', title: '会员名称', width: 130 }
+                , { field: 'RequiredPoint', title: '所需积分', width: 130 }
+                , { field: 'Discount', title: '折扣', width: 90 }
+                , { field: 'ImgUrl', title: '图片', width: 80 }
+                , { fixed: 'right', title: '操作管理', width: 130, align: 'center', toolbar: '#barAction' }
+            ]]
+            , id: 'tableReload'
+            , page: false
+            , response: {
+                statusName: 'Success' //数据状态的字段名称，默认：code
+                , statusCode: true //成功的状态码，默认：0
+                , msgName: 'Message' //状态信息的字段名称，默认：msg
+                , countName: 'Count' //数据总数的字段名称，默认：count
+                , dataName: 'Data' //数据列表的字段名称，默认：data
+            }
+            , where: { DataStatus: 2 }
+        });
+
+        //监听工具条 (注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值")
+        table.on('tool(tableList)', function (obj) {
+            var data = obj.data; //获得当前行数据
+            var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+            var tr = obj.tr; //获得当前行 tr 的DOM对象
+            if (layEvent === 'edit') { //编辑
+                layer.open({
+                    type: 2,
+                    title: "修改奖品",
+                    area: ['430px', '500px'],
+                    fixed: false,
+                    content: '/Prize/Update?id=' + data.Id,
+                    end: function () {
+                        active.reload();
+                    }
+                });
+            } else if (layEvent === 'delete') { //删除
+                layer.open({
+                    content: '确认要删除吗？',
+                    btn: ['确定', '取消'],
+                    area: '360px',
+                    icon: 3,
+                    yes: function (index, layero) {
+                        active.delete(data.Id);
+                        layer.close(index);
+                    }
+                });
+            }
+        });
+
+        var $ = layui.$, active = {
+            reload: function () {
+                //执行重载
+                table.reload('tableReload', {});
+            }, delete: function (id) {
+                $.ajax({
+                    url: '/MemberType/DeleteData?id=' + id,
+                    type: 'post',
+                    dataType: "json",
+                    success: function (data, status) {
+                        if (data.Success) {
+                            active.reload();
+                            layer.msg('提交成功', { icon: 1 });
+                        } else {
+                            layer.msg(data.Message, { icon: 2 });
+                        }
+                    },
+                    beforeSend: function () {
+                        layer.load("loading");
+                    },
+                    complete: function () {
+                        layer.closeAll('loading');
+                    }
+                });
+            }
+        };
+
+        $("#btnAdd").on('click', function () {
+            layer.open({
+                type: 2,
+                title: "添加会员类型",
+                area: ['430px', '500px'],
+                fixed: false,
+                content: '/MemberType/Add',
+                end: function () {
+                    active.reload();
+                }
+            });
+        });
+    });
+</script>
+
